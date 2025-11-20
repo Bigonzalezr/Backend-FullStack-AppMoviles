@@ -1,7 +1,5 @@
 package com.edutech.msvc.profesores.services;
 
-import com.edutech.msvc.profesores.dtos.EstadoProfesorDTO;
-import com.edutech.msvc.profesores.dtos.UpdateProfesorDTO;
 import com.edutech.msvc.profesores.models.entities.Profesor;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.edutech.msvc.compra.services;
 
-import com.edutech.msvc.compra.exceptions.CompraException;
 import com.edutech.msvc.boleta.models.entities.Compra;
 import com.edutech.msvc.compra.repositories.CompraRepository;
 import net.datafaker.Faker;
@@ -21,7 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PedidoServiceTest {
+public class pedidoServiceTest {
 
     @Mock
     private CompraRepository compraRepository;

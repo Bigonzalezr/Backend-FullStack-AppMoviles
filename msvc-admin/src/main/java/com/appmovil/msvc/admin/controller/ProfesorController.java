@@ -1,7 +1,5 @@
 package com.edutech.msvc.profesores.controller;
 
-import com.edutech.msvc.profesores.dtos.EstadoProfesorDTO;
-import com.edutech.msvc.profesores.dtos.UpdateProfesorDTO;
 import com.edutech.msvc.profesores.models.entities.Profesor;
 import com.edutech.msvc.profesores.services.ProfesorService;
 import jakarta.validation.Valid;

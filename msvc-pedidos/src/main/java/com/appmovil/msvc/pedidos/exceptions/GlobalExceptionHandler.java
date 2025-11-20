@@ -1,6 +1,8 @@
-package com.edutech.compra.exceptions;
+package com.appmovil.msvc.pedidos.exceptions;
 
-import com.edutech.compra.dtos.ErrorDTO;
+import com.appmovil.msvc.pedidos.dtos.ErrorDTO;
+import com.appmovil.msvc.pedidos.exceptions.PedidoException;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -24,6 +26,7 @@ public class GlobalExceptionHandler {
         return errorDTO;
     }
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDTO> handleValidationFields(MethodArgumentNotValidException exception){
         Map<String, String> errorMap = new HashMap<>();
@@ -34,17 +37,33 @@ public class GlobalExceptionHandler {
                 .body(this.createErrorDTO(HttpStatus.BAD_REQUEST.value(), new Date(), errorMap));
     }
 
-    @ExceptionHandler(CompraException.class)
-    public ResponseEntity<ErrorDTO> handleCompraException(CompraException exception){
 
-        if(exception.getMessage().contains("no se encuentra en la base de datos")) {
-            Map<String, String> errorMap = Collections.singletonMap("Pedido no encontrada", exception.getMessage());
+    @ExceptionHandler(FeignException.NotFound.class)
+    public ResponseEntity<ErrorDTO> handleFeignNotFound(FeignException.NotFound exception) {
+        Map<String, String> errorMap = Collections.singletonMap("Recurso Externo", "No se encontró el recurso externo necesario para el pedido (Usuario o Producto).");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(this.createErrorDTO(HttpStatus.NOT_FOUND.value(), new Date(), errorMap));
+    }
+
+
+    @ExceptionHandler(PedidoException.class)
+    public ResponseEntity<ErrorDTO> handlePedidoException(PedidoException exception){
+
+        if(exception.getMessage().contains("no encontrado") || exception.getMessage().contains("no existe")) {
+
+            Map<String, String> errorMap = Collections.singletonMap("Pedido", exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(this.createErrorDTO(HttpStatus.NOT_FOUND.value(), new Date(), errorMap));
-        } else {
-            Map<String, String> errorMap = Collections.singletonMap("Pedido existente", exception.getMessage());
+        } else if (exception.getMessage().contains("Stock insuficiente")) {
+
+            Map<String, String> errorMap = Collections.singletonMap("Inventario", exception.getMessage());
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(this.createErrorDTO(HttpStatus.CONFLICT.value(), new Date(), errorMap));
+        } else {
+
+            Map<String, String> errorMap = Collections.singletonMap("Error de Pedido", exception.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(this.createErrorDTO(HttpStatus.BAD_REQUEST.value(), new Date(), errorMap));
         }
     }
 }

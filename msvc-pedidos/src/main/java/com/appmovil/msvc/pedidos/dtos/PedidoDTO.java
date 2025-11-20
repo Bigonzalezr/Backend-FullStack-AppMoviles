@@ -21,4 +21,8 @@ public class PedidoDTO {
     // Campos enriquecidos (vienen de otros MSVCs)
     private Usuario usuario;
     private List<Producto> productos; // Lista de productos comprados
+
+    public void setIdPedido(Long id) {
+
+    }
 }

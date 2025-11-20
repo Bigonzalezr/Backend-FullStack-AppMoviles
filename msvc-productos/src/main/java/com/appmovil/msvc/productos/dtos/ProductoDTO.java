@@ -1,0 +1,21 @@
+package com.edutech.msvc.alumnos.dtos;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.time.LocalDate;
+
+@Getter @Setter @ToString
+@NoArgsConstructor @AllArgsConstructor
+public class ProductoDTO {
+    private Long id;
+    private String nombre;
+    private Integer precio;
+    private String categoria;
+    private String imagen;
+    private String descripcion;
+    private Integer stock;
+    private Double rating;
+}

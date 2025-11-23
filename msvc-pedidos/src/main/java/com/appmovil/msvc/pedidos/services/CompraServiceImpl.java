@@ -1,11 +1,11 @@
-package com.appmovil.msvc.pedidos.services;
+package com.edutech.msvc.compra.services;
 
-import com.appmovil.msvc.pedidos.dtos.CompraDTO;
-import com.appmovil.msvc.pedidos.dtos.AlumnoDTO;
-import com.appmovil.msvc.pedidos.dtos.CursoDTO;
-import com.appmovil.msvc.pedidos.dtos.ProfesorDTO;
-import com.appmovil.msvc.pedidos.exceptions.CompraException;
-import com.appmovil.msvc.pedidos.repositories.CompraRepository;
+import com.edutech.msvc.compra.dtos.CompraDTO;
+import com.edutech.msvc.compra.dtos.AlumnoDTO;
+import com.edutech.msvc.compra.dtos.CursoDTO;
+import com.edutech.msvc.compra.dtos.ProfesorDTO;
+import com.edutech.msvc.compra.exceptions.CompraException;
+import com.edutech.msvc.compra.repositories.CompraRepository;
 import feign.FeignException;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @Data
-public class CompraServiceImpl implements com.appmovil.msvc.compra.services.CompraService {
+public class CompraServiceImpl implements CompraService {
 
     @Autowired
     private CompraRepository compraRepository;

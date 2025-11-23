@@ -1,6 +1,6 @@
-package com.edutech.msvc.prueba.repositories;
+package com.appmovil.msvc.prueba.repositories;
 
-import com.edutech.msvc.prueba.models.entities.Prueba;
+import com.appmovil.msvc.prueba.models.entities.Prueba;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

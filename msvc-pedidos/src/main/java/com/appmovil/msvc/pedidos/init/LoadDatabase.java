@@ -1,6 +1,6 @@
-package com.edutech.msvc.compra.init;
+package com.appmovil.msvc.pedidos.init;
 
-import com.edutech.msvc.compra.repositories.CompraRepository;
+import com.appmovil.msvc.pedidos.repositories.PedidoRepository;
 import net.datafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

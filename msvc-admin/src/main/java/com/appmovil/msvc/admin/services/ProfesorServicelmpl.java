@@ -1,10 +1,8 @@
-package com.edutech.msvc.profesores.services;
+package com.appmovil.msvc.profesores.services;
 
-import com.edutech.msvc.profesores.dtos.EstadoProfesorDTO;
-import com.edutech.msvc.profesores.dtos.UpdateProfesorDTO;
-import com.edutech.msvc.profesores.exception.ProfesorException;
-import com.edutech.msvc.profesores.models.entities.Profesor;
-import com.edutech.msvc.profesores.repositories.ProfesorRepository;
+import com.appmovil.msvc.profesores.exception.ProfesorException;
+import com.appmovil.msvc.profesores.models.entities.Profesor;
+import com.appmovil.msvc.profesores.repositories.ProfesorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

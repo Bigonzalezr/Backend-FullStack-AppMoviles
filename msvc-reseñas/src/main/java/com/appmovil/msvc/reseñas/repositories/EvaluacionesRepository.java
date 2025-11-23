@@ -1,6 +1,6 @@
-package com.edutech.msvc.evaluaciones.repositories;
+package com.appmovil.msvc.evaluaciones.repositories;
 
-import com.edutech.msvc.evaluaciones.models.entities.Evaluacion;
+import com.appmovil.msvc.evaluaciones.models.entities.Evaluacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.edutech.msvc.boleta.models.entities;
+package com.appmovil.msvc.boleta.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

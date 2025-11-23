@@ -1,9 +1,9 @@
-package com.edutech.msvc.boleta.controllers;
+package com.appmovil.msvc.boleta.controllers;
 
-import com.edutech.msvc.boleta.assemblers.BoletaModelAssembler;
-import com.edutech.msvc.boleta.dtos.ErrorDTO;
-import com.edutech.msvc.boleta.models.entities.Boleta;
-import com.edutech.msvc.boleta.services.BoletaService;
+import com.appmovil.msvc.boleta.assemblers.BoletaModelAssembler;
+import com.appmovil.msvc.boleta.dtos.ErrorDTO;
+import com.appmovil.msvc.boleta.models.entities.Boleta;
+import com.appmovil.msvc.boleta.services.BoletaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

@@ -2,7 +2,7 @@ package com.appmovil.msvc.pedidos.controller;
 
 import com.appmovil.msvc.pedidos.assemblers.PedidoModelAssembler;
 import com.appmovil.msvc.pedidos.dtos.ErrorDTO;
-import com.appmovil.msvc.pedidos.model.entities.Pedido;
+import com.appmovil.msvc.pedidos.model.entity.Pedido;
 import com.appmovil.msvc.pedidos.services.PedidoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

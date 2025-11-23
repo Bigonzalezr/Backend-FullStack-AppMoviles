@@ -1,4 +1,4 @@
-package com.edutech.msvc.boleta.models;
+package com.appmovil.msvc.boleta.models;
 
 import lombok.*;
 

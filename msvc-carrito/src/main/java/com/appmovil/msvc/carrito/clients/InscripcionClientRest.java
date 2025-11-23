@@ -1,6 +1,6 @@
-package com.edutech.msvc.cursos.clients;
+package com.appmovil.msvc.cursos.clients;
 
-import com.edutech.msvc.cursos.models.Inscripcion;
+import com.appmovil.msvc.cursos.models.Inscripcion;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

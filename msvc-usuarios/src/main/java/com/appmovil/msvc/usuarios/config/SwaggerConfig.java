@@ -1,4 +1,4 @@
-package com.edutech.msvc.boleta.config;
+package com.appmovil.msvc.boleta.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

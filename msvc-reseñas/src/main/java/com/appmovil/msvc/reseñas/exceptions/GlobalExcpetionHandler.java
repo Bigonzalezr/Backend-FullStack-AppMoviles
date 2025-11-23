@@ -1,6 +1,6 @@
-package com.edutech.msvc.evaluaciones.exceptions;
+package com.appmovil.msvc.evaluaciones.exceptions;
 
-import com.edutech.msvc.evaluaciones.dtos.ErrorDTO;
+import com.appmovil.msvc.evaluaciones.dtos.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

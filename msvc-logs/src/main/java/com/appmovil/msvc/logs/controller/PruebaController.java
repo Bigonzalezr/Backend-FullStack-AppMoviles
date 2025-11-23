@@ -1,8 +1,8 @@
-package com.edutech.msvc.prueba.controller;
+package com.appmovil.msvc.prueba.controller;
 
-import com.edutech.msvc.prueba.dtos.PruebaDTO;
-import com.edutech.msvc.prueba.models.entities.Prueba;
-import com.edutech.msvc.prueba.services.PruebaService;
+import com.appmovil.msvc.prueba.dtos.PruebaDTO;
+import com.appmovil.msvc.prueba.models.entities.Prueba;
+import com.appmovil.msvc.prueba.services.PruebaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

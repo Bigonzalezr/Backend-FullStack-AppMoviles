@@ -1,4 +1,4 @@
-package com.edutech.msvc.cursos.exceptions;
+package com.appmovil.msvc.cursos.exceptions;
 
 public class CursoException extends RuntimeException {
     public CursoException(String message) {

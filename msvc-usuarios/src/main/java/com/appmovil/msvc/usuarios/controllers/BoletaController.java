@@ -1,8 +1,8 @@
-package com.edutech.msvc.boleta.controllers;
+package com.appmovil.msvc.boleta.controllers;
 
-import com.edutech.msvc.boleta.dtos.BoletaDTO;
-import com.edutech.msvc.boleta.models.entities.Boleta;
-import com.edutech.msvc.boleta.services.BoletaService;
+import com.appmovil.msvc.boleta.dtos.BoletaDTO;
+import com.appmovil.msvc.boleta.models.entities.Boleta;
+import com.appmovil.msvc.boleta.services.BoletaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

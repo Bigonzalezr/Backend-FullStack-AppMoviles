@@ -1,4 +1,4 @@
-package com.edutech.msvc.boleta.dtos;
+package com.appmovil.msvc.boleta.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

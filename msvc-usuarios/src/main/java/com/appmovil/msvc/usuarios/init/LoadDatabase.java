@@ -1,7 +1,7 @@
-package com.edutech.msvc.boleta.init;
+package com.appmovil.msvc.boleta.init;
 
-import com.edutech.msvc.boleta.models.entities.Boleta;
-import com.edutech.msvc.boleta.repositories.BoletaRepository;
+import com.appmovil.msvc.boleta.models.entities.Boleta;
+import com.appmovil.msvc.boleta.repositories.BoletaRepository;
 import net.datafaker.Faker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

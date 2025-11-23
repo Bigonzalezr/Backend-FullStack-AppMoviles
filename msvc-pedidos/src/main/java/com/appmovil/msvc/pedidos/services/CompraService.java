@@ -1,18 +1,19 @@
-package com.appmovil.msvc.compra.services;
+package com.appmovil.msvc.pedidos.services;
 
-import com.edutech.msvc.compra.dtos.CompraDTO;
+import com.appmovil.msvc.pedidos.dtos.PedidoDTO;
+import com.appmovil.msvc.pedidos.model.entity.Pedido;
 
 import java.util.List;
 
-public interface CompraService {
+interface pedidoService {
 
-    List<CompraDTO> findAll();
+    List<PedidoDTO> findAll();
 
-    com.edutech.msvc.compra.model.entity.Pedido findById(Long id);
+    Pedido findById(Long id);
 
-    com.edutech.msvc.compra.model.entity.Pedido save(com.edutech.msvc.compra.model.entity.Pedido pedido);
+    Pedido save(Pedido pedido);
 
-    List<com.edutech.msvc.compra.model.entity.Pedido> findByAlumnoId(Long alumnoId);
+    List<Pedido> findByIdUsuario(Long idUsuario);
 
-    List<com.edutech.msvc.compra.model.entity.Pedido> findByProfesorId(Long profesorId);
+    List<Pedido> findByProductoId(Long idProducto);
 }

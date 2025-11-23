@@ -1,14 +1,14 @@
-package com.edutech.msvc.cursos.services;
+package com.appmovil.msvc.cursos.services;
 
-import com.edutech.msvc.cursos.clients.AlumnoClientRest;
-import com.edutech.msvc.cursos.clients.InscripcionClientRest;
-import com.edutech.msvc.cursos.dtos.AlumnoDTO;
-import com.edutech.msvc.cursos.dtos.InscripcionCursoDTO;
-import com.edutech.msvc.cursos.exceptions.CursoException;
-import com.edutech.msvc.cursos.models.Alumno;
-import com.edutech.msvc.cursos.models.Inscripcion;
-import com.edutech.msvc.cursos.models.entities.Curso;
-import com.edutech.msvc.cursos.repositories.CursoRepository;
+import com.appmovil.msvc.cursos.clients.AlumnoClientRest;
+import com.appmovil.msvc.cursos.clients.InscripcionClientRest;
+import com.appmovil.msvc.cursos.dtos.AlumnoDTO;
+import com.appmovil.msvc.cursos.dtos.InscripcionCursoDTO;
+import com.appmovil.msvc.cursos.exceptions.CursoException;
+import com.appmovil.msvc.cursos.models.Alumno;
+import com.appmovil.msvc.cursos.models.Inscripcion;
+import com.appmovil.msvc.cursos.models.entities.Curso;
+import com.appmovil.msvc.cursos.repositories.CursoRepository;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

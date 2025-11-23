@@ -1,6 +1,6 @@
-package com.edutech.msvc.profesores.client;
+package com.appmovil.msvc.profesores.client;
 
-import com.edutech.msvc.profesores.models.Cursos;
+import com.appmovil.msvc.profesores.models.Cursos;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

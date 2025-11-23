@@ -1,6 +1,6 @@
-package com.edutech.msvc.boleta.clients;
+package com.appmovil.msvc.boleta.clients;
 
-import com.edutech.msvc.boleta.models.Profesor;
+import com.appmovil.msvc.boleta.models.Profesor;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

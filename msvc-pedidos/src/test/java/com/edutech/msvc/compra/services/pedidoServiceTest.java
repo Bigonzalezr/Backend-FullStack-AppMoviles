@@ -1,7 +1,12 @@
-package com.edutech.msvc.compra.services;
+package com.appmovil.msvc.pedidos.services;
 
-import com.edutech.msvc.boleta.models.entities.Compra;
-import com.edutech.msvc.compra.repositories.CompraRepository;
+
+import com.appmovil.msvc.pedidos.controller.PedidoServiceImpl;
+import com.appmovil.msvc.pedidos.dtos.PedidoDTO;
+import com.appmovil.msvc.pedidos.exceptions.PedidoException;
+import com.appmovil.msvc.pedidos.model.entity.Pedido;
+import com.appmovil.msvc.pedidos.model.entity.PedidoDetalle;
+import com.appmovil.msvc.pedidos.repositories.PedidoRepository;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,81 +25,109 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class pedidoServiceTest {
+public class PedidoServiceTest { // Nombre de clase corregido
 
     @Mock
-    private CompraRepository compraRepository;
+    private PedidoRepository pedidoRepository; // Repositorio corregido
 
     @InjectMocks
-    private CompraServiceImpl compraService;
+    private PedidoServiceImpl pedidoService; // Servicio implementado corregido
 
-    private Compra compraPrueba;
-    private List<Compra> compras = new ArrayList<>();
+    private Pedido pedidoPrueba;
+    private List<Pedido> pedidos = new ArrayList<>();
+    private Faker faker;
+
+    // --- Métodos Auxiliares para Setup ---
+
+    private PedidoDetalle createDetalle(Long idProducto, int cantidad, int precio) {
+        PedidoDetalle detalle = new PedidoDetalle();
+        detalle.setIdProducto(idProducto);
+        detalle.setNombreProducto(faker.commerce().productName());
+        detalle.setPrecioUnitario(precio);
+        detalle.setCantidad(cantidad);
+        return detalle;
+    }
+
+    private Pedido createPedidoWithDetails(Long id, Long idUsuario) {
+        Pedido p = new Pedido();
+        p.setId(id);
+        p.setIdUsuario(idUsuario);
+        p.setFechaCompra(LocalDateTime.now());
+
+        // Agregamos dos ítems de detalle (simulando una compra)
+        p.agregarDetalle(createDetalle(101L, 2, 50000)); // Total 100,000
+        p.agregarDetalle(createDetalle(102L, 1, 120000)); // Total 120,000
+
+        // Nota: @PrePersist/@PreUpdate calculará los totales al guardar, pero para el mock es suficiente.
+        p.setSubtotal(220000);
+        p.setCostoEnvio(0);
+        p.setTotalFinal(220000);
+        p.setEstado("COMPLETADO");
+        return p;
+    }
+
+    // --- Configuración Inicial ---
 
     @BeforeEach
     public void setUp() {
-        this.compraPrueba = new Compra();
-        compraPrueba.setIdCompra(1L);
-        compraPrueba.setHoraCompra(LocalDateTime.now());
-        compraPrueba.setTotal(15000);
-        compraPrueba.setIdCurso(111L);
-        compraPrueba.setIdAlumno(222L);
+        this.faker = new Faker(new Locale("es", "CL"));
 
-        Faker faker = new Faker(new Locale("es", "CL"));
+        // 1. Pedido de prueba (ID 1, Total 220,000, 0 envío)
+        this.pedidoPrueba = createPedidoWithDetails(1L, 222L);
+
+        // 2. Generación de 100 pedidos aleatorios para la lista
         for (int i = 0; i < 100; i++) {
-            Compra c = new Compra();
-            c.setIdCompra((long) i + 2);
-            c.setHoraCompra(LocalDateTime.now().minusDays(faker.number().numberBetween(1, 30)));
-            c.setTotal(faker.number().numberBetween(5000, 30000));
-            c.setIdCurso((long) faker.number().numberBetween(100, 200));
-            c.setIdAlumno((long) faker.number().numberBetween(200, 300));
-            compras.add(c);
+            Pedido p = createPedidoWithDetails((long) i + 2, (long) faker.number().numberBetween(1, 100));
+            pedidos.add(p);
         }
     }
 
-    @Test
-    @DisplayName("Devuelve todas las compras")
-    public void shouldFindAllCompras() {
-        compras.add(compraPrueba);
-        when(compraRepository.findAll()).thenReturn(compras);
+    // --- Tests Funcionales ---
 
-        List<Compra> result = compraService.findAll();
+    @Test
+    @DisplayName("Devolver todos los pedidos")
+    public void shouldFindAllPedidos() { // Nombre del método corregido
+        pedidos.add(pedidoPrueba);
+        when(pedidoRepository.findAll()).thenReturn(pedidos);
+
+        // El servicio devuelve una lista de PedidoDTOs (findAll())
+        List<PedidoDTO> result = pedidoService.findAll();
 
         assertThat(result).hasSize(101);
-        assertThat(result).contains(compraPrueba);
-        verify(compraRepository, times(1)).findAll();
+        // Verificar que el repositorio fue llamado correctamente
+        verify(pedidoRepository, times(1)).findAll();
     }
 
     @Test
-    @DisplayName("Encontrar por ID una compra")
-    public void shouldFindCompraById() {
-        when(compraRepository.findById(1L)).thenReturn(Optional.of(compraPrueba));
-        Compra result = compraService.findById(1L);
+    @DisplayName("Encontrar pedido por ID")
+    public void shouldFindPedidoById() { // Nombre del método corregido
+        when(pedidoRepository.findById(1L)).thenReturn(Optional.of(pedidoPrueba));
+        Pedido result = pedidoService.findById(1L);
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(compraPrueba);
-        verify(compraRepository, times(1)).findById(1L);
+        assertThat(result).isEqualTo(pedidoPrueba);
+        verify(pedidoRepository, times(1)).findById(1L);
     }
 
     @Test
-    @DisplayName("Pedido no encontrada por ID")
-    public void shouldNotFindCompraById() {
+    @DisplayName("Lanzar excepción al no encontrar Pedido por ID")
+    public void shouldNotFindPedidoById() { // Nombre del método corregido
         Long idInexistente = 9999L;
-        when(compraRepository.findById(idInexistente)).thenReturn(Optional.empty());
+        when(pedidoRepository.findById(idInexistente)).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> compraService.findById(idInexistente))
-                .isInstanceOf(CompraException.class)
-                .hasMessageContaining("La compra con id: " + idInexistente + " no se encuentra en la base de datos");
+        assertThatThrownBy(() -> pedidoService.findById(idInexistente))
+                .isInstanceOf(PedidoException.class) // Excepción corregida
+                .hasMessageContaining("El Pedido con ID: " + idInexistente + " no se encuentra"); // Mensaje corregido
 
-        verify(compraRepository, times(1)).findById(idInexistente);
+        verify(pedidoRepository, times(1)).findById(idInexistente);
     }
 
     @Test
-    @DisplayName("Debería guardar una compra")
-    public void shouldSaveCompra() {
-        when(compraRepository.save(any(Compra.class))).thenReturn(compraPrueba);
-        Compra result = compraService.save(compraPrueba);
+    @DisplayName("Debería guardar un pedido")
+    public void shouldSavePedido() { // Nombre del método corregido
+        when(pedidoRepository.save(any(Pedido.class))).thenReturn(pedidoPrueba);
+        Pedido result = pedidoService.save(pedidoPrueba);
         assertThat(result).isNotNull();
-        assertThat(result).isEqualTo(compraPrueba);
-        verify(compraRepository, times(1)).save(any(Compra.class));
+        assertThat(result).isEqualTo(pedidoPrueba);
+        verify(pedidoRepository, times(1)).save(any(Pedido.class));
     }
 }

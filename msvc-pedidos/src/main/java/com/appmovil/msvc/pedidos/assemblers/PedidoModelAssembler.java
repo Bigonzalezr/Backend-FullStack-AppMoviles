@@ -2,6 +2,7 @@ package com.appmovil.msvc.pedidos.assemblers; // Paquete corregido
 
 import com.appmovil.msvc.pedidos.controller.PedidoController;
 import com.appmovil.msvc.pedidos.model.entity.Pedido;
+import com.appmovil.msvc.pedidos.model.entity.PedidoDetalle;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

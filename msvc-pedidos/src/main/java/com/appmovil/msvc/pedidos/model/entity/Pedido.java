@@ -3,7 +3,6 @@ package com.appmovil.msvc.pedidos.model.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.hateoas.TemplateVariables;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,6 +30,7 @@ public class Pedido {
     @NotNull(message = "La fecha de compra es obligatoria")
     private LocalDateTime fechaCompra = LocalDateTime.now();
 
+    // Campos de resumen financiero
     private Integer subtotal;
     private Integer costoEnvio;
     private Integer totalFinal;
@@ -40,29 +40,21 @@ public class Pedido {
     private List<PedidoDetalle> detalles = new ArrayList<>();
 
 
-    @PrePersist @PreUpdate
-    public void calcularTotales() {
-        this.subtotal = detalles.stream().mapToInt(PedidoDetalle::getTotalLinea).sum();
-
-
-        this.costoEnvio = (this.subtotal > 200000) ? 0 : 3000;
-
-        this.totalFinal = this.subtotal + this.costoEnvio;
-    }
 
     public void agregarDetalle(PedidoDetalle detalle) {
         detalles.add(detalle);
         detalle.setPedido(this);
     }
 
-    public Long getIdUsuario() {
-        return null;
-    }
 
-    public Long getId() {
-        return null;
-    }
+    @PrePersist @PreUpdate
+    public void calcularTotales() {
+        this.subtotal = detalles.stream()
+                .mapToInt(d -> d.getPrecioUnitario() * d.getCantidad())
+                .sum();
 
-    public TemplateVariables getDetalles() {
+        this.costoEnvio = (this.subtotal > 200000) ? 0 : 3000;
+
+        this.totalFinal = this.subtotal + this.costoEnvio;
     }
 }

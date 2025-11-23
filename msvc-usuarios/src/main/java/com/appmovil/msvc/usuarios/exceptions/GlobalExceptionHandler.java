@@ -1,6 +1,6 @@
-package com.edutech.msvc.boleta.exceptions;
+package com.appmovil.msvc.boleta.exceptions;
 
-import com.edutech.msvc.boleta.dtos.ErrorDTO;
+import com.appmovil.msvc.boleta.dtos.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

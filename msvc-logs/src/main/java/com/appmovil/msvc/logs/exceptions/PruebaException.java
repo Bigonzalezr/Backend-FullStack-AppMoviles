@@ -1,4 +1,4 @@
-package com.edutech.msvc.prueba.exceptions;
+package com.appmovil.msvc.prueba.exceptions;
 
 public class PruebaException extends RuntimeException {
     public PruebaException(String message) {

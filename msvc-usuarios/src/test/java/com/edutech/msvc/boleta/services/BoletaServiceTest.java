@@ -1,8 +1,8 @@
-package com.edutech.msvc.boleta.services;
+package com.appmovil.msvc.boleta.services;
 
-import com.edutech.msvc.boleta.exceptions.BoletaException;
-import com.edutech.msvc.boleta.models.entities.Boleta;
-import com.edutech.msvc.boleta.repositories.BoletaRepository;
+import com.appmovil.msvc.boleta.exceptions.BoletaException;
+import com.appmovil.msvc.boleta.models.entities.Boleta;
+import com.appmovil.msvc.boleta.repositories.BoletaRepository;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,7 @@
-package com.edutech.msvc.cursos.services;
+package com.appmovil.msvc.cursos.services;
 
-import com.edutech.msvc.cursos.dtos.InscripcionCursoDTO;
-import com.edutech.msvc.cursos.models.entities.Curso;
+import com.appmovil.msvc.cursos.dtos.InscripcionCursoDTO;
+import com.appmovil.msvc.cursos.models.entities.Curso;
 
 import java.util.List;
 

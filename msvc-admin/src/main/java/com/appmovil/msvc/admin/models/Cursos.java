@@ -1,4 +1,4 @@
-package com.edutech.msvc.profesores.models;
+package com.appmovil.msvc.profesores.models;
 
 import lombok.*;
 

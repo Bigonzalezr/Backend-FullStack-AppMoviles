@@ -1,7 +1,7 @@
-package com.edutech.msvc.prueba.services;
+package com.appmovil.msvc.prueba.services;
 
-import com.edutech.msvc.prueba.dtos.PruebaDTO;
-import com.edutech.msvc.prueba.models.entities.Prueba;
+import com.appmovil.msvc.prueba.dtos.PruebaDTO;
+import com.appmovil.msvc.prueba.models.entities.Prueba;
 
 import java.util.List;
 

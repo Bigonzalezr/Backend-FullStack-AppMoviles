@@ -1,17 +1,17 @@
-package com.edutech.msvc.prueba.services;
+package com.appmovil.msvc.prueba.services;
 
 
-import com.edutech.msvc.prueba.clients.CursosClientRest;
-import com.edutech.msvc.prueba.clients.ProfesorClientRest;
-import com.edutech.msvc.prueba.clients.PruebaClientRest;
-import com.edutech.msvc.prueba.dtos.CursoDTO;
-import com.edutech.msvc.prueba.dtos.ProfesorDTO;
-import com.edutech.msvc.prueba.dtos.PruebaDTO;
-import com.edutech.msvc.prueba.exceptions.PruebaException;
-import com.edutech.msvc.prueba.models.Cursos;
-import com.edutech.msvc.prueba.models.Profesores;
-import com.edutech.msvc.prueba.models.entities.Prueba;
-import com.edutech.msvc.prueba.repositories.PruebaRepository;
+import com.appmovil.msvc.prueba.clients.CursosClientRest;
+import com.appmovil.msvc.prueba.clients.ProfesorClientRest;
+import com.appmovil.msvc.prueba.clients.PruebaClientRest;
+import com.appmovil.msvc.prueba.dtos.CursoDTO;
+import com.appmovil.msvc.prueba.dtos.ProfesorDTO;
+import com.appmovil.msvc.prueba.dtos.PruebaDTO;
+import com.appmovil.msvc.prueba.exceptions.PruebaException;
+import com.appmovil.msvc.prueba.models.Cursos;
+import com.appmovil.msvc.prueba.models.Profesores;
+import com.appmovil.msvc.prueba.models.entities.Prueba;
+import com.appmovil.msvc.prueba.repositories.PruebaRepository;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

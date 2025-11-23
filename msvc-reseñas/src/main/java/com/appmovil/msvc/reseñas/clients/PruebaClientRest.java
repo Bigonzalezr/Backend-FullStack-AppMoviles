@@ -1,7 +1,7 @@
-package com.edutech.msvc.evaluaciones.clients;
+package com.appmovil.msvc.evaluaciones.clients;
 
-import com.edutech.msvc.evaluaciones.models.Prueba;
-import com.edutech.msvc.evaluaciones.models.entities.Evaluacion;
+import com.appmovil.msvc.evaluaciones.models.Prueba;
+import com.appmovil.msvc.evaluaciones.models.entities.Evaluacion;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

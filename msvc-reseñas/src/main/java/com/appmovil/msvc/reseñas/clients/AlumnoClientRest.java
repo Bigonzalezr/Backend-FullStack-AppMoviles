@@ -1,7 +1,7 @@
-package com.edutech.msvc.evaluaciones.clients;
+package com.appmovil.msvc.evaluaciones.clients;
 
-import com.edutech.msvc.evaluaciones.models.Alumno;
-import com.edutech.msvc.evaluaciones.models.Prueba;
+import com.appmovil.msvc.evaluaciones.models.Alumno;
+import com.appmovil.msvc.evaluaciones.models.Prueba;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

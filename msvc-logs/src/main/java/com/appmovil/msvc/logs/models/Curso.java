@@ -1,4 +1,4 @@
-package com.edutech.msvc.prueba.models;
+package com.appmovil.msvc.prueba.models;
 
 import lombok.*;
 

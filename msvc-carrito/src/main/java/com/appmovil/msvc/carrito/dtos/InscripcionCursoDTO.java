@@ -1,4 +1,4 @@
-package com.edutech.msvc.cursos.dtos;
+package com.appmovil.msvc.cursos.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

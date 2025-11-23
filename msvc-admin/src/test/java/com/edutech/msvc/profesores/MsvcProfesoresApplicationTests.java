@@ -1,4 +1,4 @@
-package com.edutech.msvc.profesores;
+package com.appmovil.msvc.profesores;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

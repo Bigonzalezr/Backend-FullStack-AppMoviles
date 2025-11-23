@@ -1,7 +1,7 @@
-package com.edutech.msvc.cursos.controllers;
+package com.appmovil.msvc.cursos.controllers;
 
-import com.edutech.msvc.cursos.models.entities.Curso;
-import com.edutech.msvc.cursos.services.CursoService;
+import com.appmovil.msvc.cursos.models.entities.Curso;
+import com.appmovil.msvc.cursos.services.CursoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

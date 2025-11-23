@@ -1,6 +1,6 @@
-package com.edutech.msvc.boleta.repositories;
+package com.appmovil.msvc.boleta.repositories;
 
-import com.edutech.msvc.boleta.models.entities.Boleta;
+import com.appmovil.msvc.boleta.models.entities.Boleta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

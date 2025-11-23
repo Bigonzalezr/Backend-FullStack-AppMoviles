@@ -1,4 +1,4 @@
-package com.edutech.msvc.evaluaciones.exceptions;
+package com.appmovil.msvc.evaluaciones.exceptions;
 
 public class EvaluacionException extends RuntimeException {
     public EvaluacionException(String message) {

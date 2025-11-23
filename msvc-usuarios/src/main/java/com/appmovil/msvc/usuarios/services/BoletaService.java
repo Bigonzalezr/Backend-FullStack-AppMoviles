@@ -1,7 +1,7 @@
-package com.edutech.msvc.boleta.services;
+package com.appmovil.msvc.boleta.services;
 
-import com.edutech.msvc.boleta.dtos.BoletaDTO;
-import com.edutech.msvc.boleta.models.entities.Boleta;
+import com.appmovil.msvc.usuarios.dtos.BoletaDTO;
+import com.appmovil.msvc.usuarios.models.entities.Boleta;
 
 import java.util.List;
 

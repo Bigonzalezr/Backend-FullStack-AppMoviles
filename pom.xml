@@ -9,7 +9,7 @@
         <version>3.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.edutech</groupId>
+    <groupId>com.appmovil</groupId>
     <artifactId>edutech</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>

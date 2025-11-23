@@ -1,6 +1,6 @@
-package com.edutech.msvc.profesores.services;
+package com.appmovil.msvc.profesores.services;
 
-import com.edutech.msvc.profesores.models.entities.Profesor;
+import com.appmovil.msvc.profesores.models.entities.Profesor;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package com.edutech.msvc.boleta.assemblers;
+package com.appmovil.msvc.boleta.assemblers;
 
-import com.edutech.msvc.boleta.controllers.BoletaController;
-import com.edutech.msvc.boleta.models.entities.Boleta;
+import com.appmovil.msvc.boleta.controllers.BoletaController;
+import com.appmovil.msvc.boleta.models.entities.Boleta;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.edutech.msvc.cursos;
+package com.appmovil.msvc.cursos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

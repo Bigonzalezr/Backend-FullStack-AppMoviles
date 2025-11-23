@@ -1,7 +1,7 @@
-package com.edutech.msvc.profesores.controller;
+package com.appmovil.msvc.profesores.controller;
 
-import com.edutech.msvc.profesores.models.entities.Profesor;
-import com.edutech.msvc.profesores.services.ProfesorService;
+import com.appmovil.msvc.profesores.models.entities.Profesor;
+import com.appmovil.msvc.profesores.services.ProfesorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

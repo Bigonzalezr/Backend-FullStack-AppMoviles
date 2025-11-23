@@ -1,4 +1,4 @@
-package com.edutech.msvc.cursos.models;
+package com.appmovil.msvc.cursos.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -367,12 +367,12 @@ class AdminControllerIntegrationTest {
         Producto producto1 = new Producto();
         producto1.setIdProducto(1L);
         producto1.setNombre("Producto 1");
-        producto1.setPrecio(BigDecimal.valueOf(100.00));
+        producto1.setPrecio(100.00);
 
         Producto producto2 = new Producto();
         producto2.setIdProducto(2L);
         producto2.setNombre("Producto 2");
-        producto2.setPrecio(BigDecimal.valueOf(200.00));
+        producto2.setPrecio(200.00);
 
         when(productoClientRest.findAll()).thenReturn(Arrays.asList(producto1, producto2));
 
@@ -391,7 +391,7 @@ class AdminControllerIntegrationTest {
         Producto producto = new Producto();
         producto.setIdProducto(1L);
         producto.setNombre("Producto Test");
-        producto.setPrecio(BigDecimal.valueOf(150.00));
+        producto.setPrecio(150.00);
 
         when(productoClientRest.findById(1L)).thenReturn(producto);
 
@@ -409,14 +409,14 @@ class AdminControllerIntegrationTest {
         Producto nuevoProducto = new Producto();
         nuevoProducto.setNombre("Nuevo Producto");
         nuevoProducto.setDescripcion("Descripción del producto");
-        nuevoProducto.setPrecio(BigDecimal.valueOf(99.99));
+        nuevoProducto.setPrecio(99.99);
         nuevoProducto.setStock(50);
         nuevoProducto.setCategoria("Electrónica");
 
         Producto productoCreado = new Producto();
         productoCreado.setIdProducto(1L);
         productoCreado.setNombre("Nuevo Producto");
-        productoCreado.setPrecio(BigDecimal.valueOf(99.99));
+        productoCreado.setPrecio(99.99);
 
         when(productoClientRest.save(any(Producto.class))).thenReturn(productoCreado);
 
@@ -435,7 +435,7 @@ class AdminControllerIntegrationTest {
         // Given
         Producto productoActualizado = new Producto();
         productoActualizado.setNombre("Producto Actualizado");
-        productoActualizado.setPrecio(BigDecimal.valueOf(120.00));
+        productoActualizado.setPrecio(120.00);
 
         when(productoClientRest.update(eq(1L), any(Producto.class))).thenReturn(productoActualizado);
 
@@ -482,12 +482,12 @@ class AdminControllerIntegrationTest {
         Pedido pedido1 = new Pedido();
         pedido1.setIdPedido(1L);
         pedido1.setIdUsuario(1L);
-        pedido1.setTotal(BigDecimal.valueOf(500.00));
+        pedido1.setTotal(500.00);
 
         Pedido pedido2 = new Pedido();
         pedido2.setIdPedido(2L);
         pedido2.setIdUsuario(2L);
-        pedido2.setTotal(BigDecimal.valueOf(300.00));
+        pedido2.setTotal(300.00);
 
         when(pedidoClientRest.findAll()).thenReturn(Arrays.asList(pedido1, pedido2));
 
@@ -504,7 +504,7 @@ class AdminControllerIntegrationTest {
         Pedido pedido = new Pedido();
         pedido.setIdPedido(1L);
         pedido.setIdUsuario(1L);
-        pedido.setTotal(BigDecimal.valueOf(500.00));
+        pedido.setTotal(500.00);
 
         when(pedidoClientRest.findById(1L)).thenReturn(pedido);
 
@@ -607,7 +607,7 @@ class AdminControllerIntegrationTest {
         Producto producto = new Producto();
         producto.setIdProducto(1L);
         producto.setNombre("Producto Admin");
-        producto.setPrecio(BigDecimal.valueOf(100.00));
+        producto.setPrecio(100.00);
 
         when(productoClientRest.findAll()).thenReturn(Arrays.asList(producto));
 

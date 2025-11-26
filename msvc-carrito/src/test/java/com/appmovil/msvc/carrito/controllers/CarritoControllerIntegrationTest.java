@@ -2,10 +2,10 @@ package com.appmovil.msvc.carrito.controllers;
 
 import com.appmovil.msvc.carrito.clients.ProductoClientRest;
 import com.appmovil.msvc.carrito.clients.UsuarioClientRest;
-import com.appmovil.msvc.carrito.clients.models.Producto;
+import com.appmovil.msvc.carrito.models.Producto;
 import com.appmovil.msvc.carrito.models.Usuario;
-import com.appmovil.msvc.carrito.entities.Carrito;
-import com.appmovil.msvc.carrito.entities.ItemCarrito;
+import com.appmovil.msvc.carrito.models.entities.Carrito;
+import com.appmovil.msvc.carrito.models.entities.ItemCarrito;
 import com.appmovil.msvc.carrito.repositories.CarritoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
@@ -72,7 +73,7 @@ class CarritoControllerIntegrationTest {
         productoTest = new Producto();
         productoTest.setIdProducto(1L);
         productoTest.setNombre("Samsung Galaxy S23");
-        productoTest.setPrecio(899);
+        productoTest.setPrecio(BigDecimal.valueOf(899));
         productoTest.setStock(15);
         productoTest.setActivo(true);
     }
@@ -87,13 +88,13 @@ class CarritoControllerIntegrationTest {
         mockMvc.perform(get("/api/carrito/{idUsuario}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.idUsuario").value(1))
-                .andExpect(jsonPath("$.activo").value(true))
+                .andExpect(jsonPath("$.estado").value("ACTIVO"))
                 .andExpect(jsonPath("$.items", hasSize(0)))
                 .andExpect(jsonPath("$.total").value(0))
                 .andExpect(jsonPath("$.totalItems").value(0));
 
         // Verificar que se creó en DB
-        assertThat(carritoRepository.findByIdUsuarioAndActivo(1L, true)).isPresent();
+        assertThat(carritoRepository.findByIdUsuarioAndEstado(1L, "ACTIVO")).isPresent();
     }
 
     @Test
@@ -107,7 +108,7 @@ class CarritoControllerIntegrationTest {
         // When & Then
         mockMvc.perform(get("/api/carrito/{idUsuario}", 1L))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.idCarrito").value(carrito.getId()))
+                .andExpect(jsonPath("$.idCarrito").value(carrito.getIdCarrito()))
                 .andExpect(jsonPath("$.items", hasSize(1)))
                 .andExpect(jsonPath("$.items[0].cantidad").value(3))
                 .andExpect(jsonPath("$.items[0].nombreProducto").value("Samsung Galaxy S23"))
@@ -294,7 +295,7 @@ class CarritoControllerIntegrationTest {
                 .andExpect(jsonPath("$.total").value(0));
 
         // Verificar en DB
-        Carrito carrito = carritoRepository.findByIdUsuarioAndActivo(1L, true).orElseThrow();
+        Carrito carrito = carritoRepository.findByIdUsuarioAndEstado(1L, "ACTIVO").orElseThrow();
         assertThat(carrito.getItems()).isEmpty();
     }
 
@@ -308,7 +309,7 @@ class CarritoControllerIntegrationTest {
         Producto producto2 = new Producto();
         producto2.setIdProducto(2L);
         producto2.setNombre("Producto 2");
-        producto2.setPrecio(500);
+        producto2.setPrecio(BigDecimal.valueOf(500));
         producto2.setStock(20);
         producto2.setActivo(true);
         when(productoClientRest.findById(2L)).thenReturn(producto2);
@@ -407,9 +408,10 @@ class CarritoControllerIntegrationTest {
     private Carrito crearCarritoVacio() {
         Carrito carrito = new Carrito();
         carrito.setIdUsuario(1L);
-        carrito.setActivo(true);
+        carrito.setEstado("ACTIVO");
         carrito.setFechaCreacion(LocalDateTime.now());
         carrito.setItems(new ArrayList<>());
+        carrito.setTotal(BigDecimal.ZERO);
         return carritoRepository.save(carrito);
     }
 
@@ -417,7 +419,7 @@ class CarritoControllerIntegrationTest {
     private Carrito crearCarritoConItems() {
         Carrito carrito = new Carrito();
         carrito.setIdUsuario(1L);
-        carrito.setActivo(true);
+        carrito.setEstado("ACTIVO");
         carrito.setFechaCreacion(LocalDateTime.now());
         carrito.setItems(new ArrayList<>());
 
@@ -425,10 +427,11 @@ class CarritoControllerIntegrationTest {
         item.setCarrito(carrito);
         item.setIdProducto(1L);
         item.setCantidad(3);
-        item.setPrecioUnitario(899);
-        item.setSubtotal(2697);
+        item.setPrecioUnitario(BigDecimal.valueOf(899));
+        item.setSubtotal(BigDecimal.valueOf(2697));
 
         carrito.getItems().add(item);
+        carrito.setTotal(BigDecimal.valueOf(2697));
 
         return carritoRepository.save(carrito);
     }

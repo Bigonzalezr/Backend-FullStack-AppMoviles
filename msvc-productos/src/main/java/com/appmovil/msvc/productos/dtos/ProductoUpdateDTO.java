@@ -6,6 +6,7 @@ import lombok.*;
 
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
+@Builder
 public class ProductoUpdateDTO {
     // Excluimos el ID (se toma del PathVariable en el Controller)
 

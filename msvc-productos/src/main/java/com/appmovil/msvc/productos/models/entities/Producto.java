@@ -9,6 +9,7 @@ import lombok.*;
 @Table(name = "productos")
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
+@Builder
 public class Producto {
 
     @Id
@@ -38,8 +39,10 @@ public class Producto {
     private Integer stock;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean activo = true;
 
+    @Builder.Default
     private Double rating = 0.0;
 
     @PrePersist

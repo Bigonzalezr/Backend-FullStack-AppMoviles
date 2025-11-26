@@ -140,10 +140,10 @@ public class AdminController {
     }
 
     @PatchMapping("/pedidos/{id}/estado")
-    public ResponseEntity<Pedido> updateEstadoPedido(@PathVariable Long id, @RequestParam String estado) {
+    public ResponseEntity<Pedido> updateEstadoPedido(@PathVariable Long id, @RequestBody java.util.Map<String, String> body) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(pedidoClientRest.updateEstado(id, estado));
+                .body(pedidoClientRest.updateEstado(id, body));
     }
 
     @DeleteMapping("/pedidos/{id}")

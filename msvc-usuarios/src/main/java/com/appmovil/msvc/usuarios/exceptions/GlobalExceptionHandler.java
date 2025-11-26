@@ -35,4 +35,31 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(this.createErrorDTO(HttpStatus.BAD_REQUEST.value(), new Date(), errorMap));
     }
+    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error", ex.getMessage());
+        
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(this.createErrorDTO(HttpStatus.NOT_FOUND.value(), new Date(), errorMap));
+    }
+    
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ErrorDTO> handleDuplicateResourceException(DuplicateResourceException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error", ex.getMessage());
+        
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(this.createErrorDTO(HttpStatus.CONFLICT.value(), new Date(), errorMap));
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDTO> handleGlobalException(Exception ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        errorMap.put("error", "Error interno del servidor: " + ex.getMessage());
+        
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(this.createErrorDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), new Date(), errorMap));
+    }
 }

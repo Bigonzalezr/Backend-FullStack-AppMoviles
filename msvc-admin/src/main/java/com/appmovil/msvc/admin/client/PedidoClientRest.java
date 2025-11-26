@@ -31,5 +31,5 @@ public interface PedidoClientRest {
     List<Pedido> findByEstado(@PathVariable String estado);
     
     @PatchMapping("/{id}/estado")
-    Pedido updateEstado(@PathVariable Long id, @RequestParam String estado);
+    Pedido updateEstado(@PathVariable Long id, @RequestBody java.util.Map<String, String> body);
 }

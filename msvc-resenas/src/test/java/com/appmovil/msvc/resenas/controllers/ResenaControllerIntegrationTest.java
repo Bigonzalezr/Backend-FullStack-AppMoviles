@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @Transactional
 @DisplayName("ReseñaController - Integration Tests")
-class ReseñaControllerIntegrationTest {
+class ResenaControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,10 +44,10 @@ class ReseñaControllerIntegrationTest {
     @Autowired
     private ReseñaRepository reseñaRepository;
 
-    @MockBean
+ 
     private UsuarioClientRest usuarioClientRest;
 
-    @MockBean
+   
     private ProductoClientRest productoClientRest;
 
     private Usuario usuarioTest;

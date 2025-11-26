@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "msvc-pagos", url = "http://localhost:8005/api/v1/pagos")
+@FeignClient(name = "msvc-pagos", url = "http://localhost:8005/api/v1/pagos", fallback = PagoClientFallback.class)
 public interface PagoClientRest {
 
     @PostMapping

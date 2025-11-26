@@ -267,14 +267,16 @@ msvc-{nombre}/
   - application-dev.properties para todos los servicios
   - application-test.properties para todos los servicios
   - Base de datos con ddl-auto=update (preserva datos)
+- **Resilience4j Circuit Breaker**:
+  - Dependencias agregadas a 7 microservicios
+  - Configuración de circuit breaker para todos los Feign clients
+  - Clases fallback implementadas en servicios críticos (carrito, pedidos)
+  - Feign configurado con circuitbreaker habilitado
+  - Health indicators para monitoreo de circuit breakers
 
 ### 🔄 Pendiente
 
 #### MEDIUM Priority
-- **Resilience4j**:
-  - Circuit breaker para Feign clients
-  - Fallbacks para servicios no disponibles
-  
 - **Testing**:
   - Unit tests para servicios
   - Integration tests para APIs

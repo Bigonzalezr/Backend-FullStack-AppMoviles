@@ -1,6 +1,6 @@
 package com.appmovil.msvc.admin.controller;
 
-import com.appmovil.msvc.admin.models.admin;
+import com.appmovil.msvc.admin.models.entities.Admin;
 import com.appmovil.msvc.admin.models.Producto;
 import com.appmovil.msvc.admin.models.Pedido;
 import com.appmovil.msvc.admin.services.AdminService;

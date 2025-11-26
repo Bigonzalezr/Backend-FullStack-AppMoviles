@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "msvc-productos", url = "localhost:8002/api/v1/productos")
+@FeignClient(name = "msvc-productos", url = "http://localhost:8002/api/v1/productos")
 public interface ProductoClientRest {
     
     @GetMapping

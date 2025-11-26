@@ -50,9 +50,11 @@ public class Admin {
     private String telefono;
 
     @Column(nullable = false)
+    @Builder.Default
     private Boolean activo = true;
 
     @Column(nullable = false, length = 20)
+    @Builder.Default
     private String rol = "ADMIN"; // SUPER_ADMIN, ADMIN, MODERADOR
 
     @Column(name = "fecha_creacion", nullable = false, updatable = false)

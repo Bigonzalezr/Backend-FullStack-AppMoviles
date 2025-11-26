@@ -3,7 +3,6 @@ package com.appmovil.msvc.logs.services;
 import com.appmovil.msvc.logs.clients.UsuarioClientRest;
 import com.appmovil.msvc.logs.dtos.LogActividadDTO;
 import com.appmovil.msvc.logs.dtos.RegistrarLogDTO;
-import com.appmovil.msvc.logs.exceptions.LogException;
 import com.appmovil.msvc.logs.exceptions.ResourceNotFoundException;
 import com.appmovil.msvc.logs.models.Usuario;
 import com.appmovil.msvc.logs.models.entities.LogActividad;

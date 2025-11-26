@@ -47,6 +47,7 @@ public class Pago {
 
     @Column(nullable = false, length = 20)
     @NotBlank(message = "El estado no puede estar vacío")
+    @Builder.Default
     private String estado = "PENDIENTE"; // PENDIENTE, PROCESANDO, COMPLETADO, FALLIDO, REEMBOLSADO
 
     @Column(name = "fecha_pago", nullable = false)

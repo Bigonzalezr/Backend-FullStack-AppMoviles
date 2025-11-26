@@ -18,6 +18,8 @@ public interface UsuarioService {
     
     UsuarioDTO save(UsuarioCreationDTO usuarioCreationDTO);
     
+    UsuarioDTO create(UsuarioCreationDTO usuarioCreationDTO);
+    
     UsuarioDTO update(Long id, UsuarioUpdateDTO usuarioUpdateDTO);
     
     void deleteById(Long id);

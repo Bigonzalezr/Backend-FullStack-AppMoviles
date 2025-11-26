@@ -15,6 +15,14 @@ import lombok.*;
 public class UsuarioDTO {
     private Long idUsuario;
     
+    public Long getId() {
+        return idUsuario;
+    }
+    
+    public void setId(Long id) {
+        this.idUsuario = id;
+    }
+    
     @NotBlank(message = "El username no puede estar vacío")
     @Size(min = 3, max = 50, message = "El username debe tener entre 3 y 50 caracteres")
     @Pattern(regexp = "^[a-zA-Z0-9_]+$", message = "El username solo puede contener letras, números y guiones bajos")

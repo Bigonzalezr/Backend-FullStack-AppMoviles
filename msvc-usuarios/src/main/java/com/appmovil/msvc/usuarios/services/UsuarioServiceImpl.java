@@ -8,6 +8,7 @@ import com.appmovil.msvc.usuarios.exceptions.ResourceNotFoundException;
 import com.appmovil.msvc.usuarios.models.entities.Usuario;
 import com.appmovil.msvc.usuarios.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     
@@ -58,6 +62,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional
     public UsuarioDTO save(UsuarioCreationDTO usuarioCreationDTO) {
+        return create(usuarioCreationDTO);
+    }
+    
+    @Override
+    @Transactional
+    public UsuarioDTO create(UsuarioCreationDTO usuarioCreationDTO) {
         // Verificar si el username ya existe
         if (usuarioRepository.existsByUsername(usuarioCreationDTO.getUsername())) {
             throw new DuplicateResourceException("Usuario", "username", usuarioCreationDTO.getUsername());
@@ -71,7 +81,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = Usuario.builder()
                 .username(usuarioCreationDTO.getUsername())
                 .email(usuarioCreationDTO.getEmail())
-                .password(usuarioCreationDTO.getPassword()) // TODO: Encriptar password
+                .password(passwordEncoder.encode(usuarioCreationDTO.getPassword()))
                 .nombre(usuarioCreationDTO.getNombre())
                 .apellido(usuarioCreationDTO.getApellido())
                 .telefono(usuarioCreationDTO.getTelefono())

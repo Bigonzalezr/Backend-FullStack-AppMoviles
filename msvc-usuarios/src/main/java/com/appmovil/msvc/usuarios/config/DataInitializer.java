@@ -5,6 +5,7 @@ import com.appmovil.msvc.usuarios.repositories.UsuarioRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,6 +14,9 @@ public class DataInitializer implements CommandLineRunner {
     
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     @Override
     public void run(String... args) throws Exception {
@@ -23,7 +27,7 @@ public class DataInitializer implements CommandLineRunner {
             Usuario admin = Usuario.builder()
                     .username("admin")
                     .email("admin@levelupgamer.com")
-                    .password("admin123") // TODO: Usar BCrypt para encriptar
+                    .password(passwordEncoder.encode("admin123"))
                     .nombre("Administrador")
                     .apellido("Sistema")
                     .telefono("555-0000")
@@ -37,7 +41,7 @@ public class DataInitializer implements CommandLineRunner {
             Usuario user1 = Usuario.builder()
                     .username("juan_perez")
                     .email("juan.perez@email.com")
-                    .password("password123")
+                    .password(passwordEncoder.encode("password123"))
                     .nombre("Juan")
                     .apellido("Pérez")
                     .telefono("555-1234")
@@ -51,7 +55,7 @@ public class DataInitializer implements CommandLineRunner {
             Usuario user2 = Usuario.builder()
                     .username("maria_garcia")
                     .email("maria.garcia@email.com")
-                    .password("password123")
+                    .password(passwordEncoder.encode("password123"))
                     .nombre("María")
                     .apellido("García")
                     .telefono("555-5678")
@@ -65,7 +69,7 @@ public class DataInitializer implements CommandLineRunner {
             Usuario moderator = Usuario.builder()
                     .username("mod_carlos")
                     .email("carlos.mod@levelupgamer.com")
-                    .password("mod123")
+                    .password(passwordEncoder.encode("mod123"))
                     .nombre("Carlos")
                     .apellido("Moderador")
                     .telefono("555-9999")

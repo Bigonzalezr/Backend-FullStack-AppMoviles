@@ -1,4 +1,4 @@
-package com.appmovil.msvc.resenas.exceptions;
+﻿package com.appmovil.msvc.resenas.exceptions;
 
 import com.appmovil.msvc.resenas.dtos.ErrorDTO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ReseñaException.class)
-    public ResponseEntity<ErrorDTO> handleReseñaException(ReseñaException ex, HttpServletRequest request) {
+    @ExceptionHandler(ResenaException.class)
+    public ResponseEntity<ErrorDTO> handleResenaException(ResenaException ex, HttpServletRequest request) {
         ErrorDTO error = ErrorDTO.builder()
                 .mensaje(ex.getMessage())
                 .timestamp(LocalDateTime.now())

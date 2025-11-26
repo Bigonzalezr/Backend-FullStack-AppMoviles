@@ -1,4 +1,4 @@
-package com.appmovil.msvc.resenas.config;
+﻿package com.appmovil.msvc.resenas.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

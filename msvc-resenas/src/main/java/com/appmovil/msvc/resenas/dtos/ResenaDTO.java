@@ -1,4 +1,4 @@
-package com.appmovil.msvc.resenas.dtos;
+﻿package com.appmovil.msvc.resenas.dtos;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReseñaDTO {
+public class ResenaDTO {
     private Long id;
     private Long idUsuario;
     private String nombreUsuario;

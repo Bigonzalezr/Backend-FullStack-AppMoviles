@@ -1,4 +1,4 @@
-package com.appmovil.msvc.resenas.models.entities;
+﻿package com.appmovil.msvc.resenas.models.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -7,10 +7,10 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "reseñas")
+@Table(name = "Resenas")
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor
-public class Reseña {
+public class Resena {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,4 +1,4 @@
-# Backend Full-Stack App Móviles - LevelUp Gamer
+﻿# Backend Full-Stack App Móviles - LevelUp Gamer
 
 Sistema backend de microservicios para aplicación de e-commerce de videojuegos.
 
@@ -10,7 +10,7 @@ El proyecto consta de **8 microservicios** desarrollados con Spring Boot 3.4.5 y
 |----------|--------|-------------|
 | **msvc-productos** | 8002 | Gestión de catálogo de productos (videojuegos) |
 | **msvc-carrito** | 8003 | Carrito de compras |
-| **msvc-resenas** | 8004 | Reseñas y calificaciones de productos |
+| **msvc-resenas** | 8004 | Resenas y calificaciones de productos |
 | **msvc-pagos** | 8005 | Procesamiento de pagos |
 | **msvc-pedidos** | 8006 | Gestión de pedidos/órdenes |
 | **msvc-logs** | 8007 | Registro de actividades del sistema |
@@ -127,7 +127,7 @@ Cada servicio expone sus propias APIs REST siguiendo el patrón `/api/v1/{resour
 
 - **msvc-productos**: CRUD de productos, búsqueda, categorías
 - **msvc-carrito**: Gestión de ítems del carrito
-- **msvc-resenas**: Crear/listar reseñas y calificaciones
+- **msvc-resenas**: Crear/listar Resenas y calificaciones
 - **msvc-pagos**: Procesar pagos, verificar estados
 - **msvc-pedidos**: Crear/gestionar pedidos, cambiar estados
 - **msvc-logs**: Registrar y consultar actividades
@@ -261,7 +261,7 @@ msvc-{nombre}/
   - Validación de existencia de usuario en operaciones de pedidos
   - Verificación de disponibilidad de productos al confirmar pedido
   - Actualización de stock al crear/cancelar pedidos
-  - Prevención de reseñas duplicadas por usuario/producto
+  - Prevención de Resenas duplicadas por usuario/producto
   - Límite máximo de 10 unidades por producto en carrito
 - **Configuración por ambiente**:
   - application-dev.properties para todos los servicios

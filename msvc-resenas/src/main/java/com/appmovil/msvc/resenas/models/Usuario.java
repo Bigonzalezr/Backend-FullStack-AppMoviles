@@ -1,4 +1,4 @@
-package com.appmovil.msvc.resenas.models;
+﻿package com.appmovil.msvc.resenas.models;
 
 import lombok.*;
 

@@ -17,4 +17,6 @@ public interface ReseñaRepository extends JpaRepository<Reseña, Long> {
     
     @Query("SELECT AVG(r.rating) FROM Reseña r WHERE r.idProducto = :idProducto AND r.activo = true")
     Double findAverageRatingByProducto(Long idProducto);
+    
+    boolean existsByIdUsuarioAndIdProducto(Long idUsuario, Long idProducto);
 }

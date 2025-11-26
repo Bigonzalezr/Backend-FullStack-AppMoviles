@@ -256,30 +256,28 @@ msvc-{nombre}/
 - Documentación OpenAPI
 - Inicialización de datos de prueba
 - Comunicación inter-servicios con Feign
+- **Validaciones de negocio**:
+  - Verificación de stock antes de agregar al carrito
+  - Validación de existencia de usuario en operaciones de pedidos
+  - Verificación de disponibilidad de productos al confirmar pedido
+  - Actualización de stock al crear/cancelar pedidos
+  - Prevención de reseñas duplicadas por usuario/producto
+  - Límite máximo de 10 unidades por producto en carrito
+- **Configuración por ambiente**:
+  - application-dev.properties para todos los servicios
+  - application-test.properties para todos los servicios
+  - Base de datos con ddl-auto=update (preserva datos)
 
 ### 🔄 Pendiente
 
 #### MEDIUM Priority
-- **Validaciones de negocio**:
-  - Verificar stock antes de agregar al carrito
-  - Validar existencia de usuario en operaciones de pedidos
-  - Verificar disponibilidad de productos al confirmar pedido
-  
 - **Resilience4j**:
   - Circuit breaker para Feign clients
   - Fallbacks para servicios no disponibles
   
-- **Configuración por ambiente**:
-  - application-dev.properties
-  - application-prod.properties
-  - Variables de entorno
-  
 - **Testing**:
   - Unit tests para servicios
   - Integration tests para APIs
-  
-- **Base de datos**:
-  - Cambiar `ddl-auto=create` a `update` en producción
 
 #### LOW Priority
 - **Docker**:

@@ -103,6 +103,11 @@ public class CarritoServiceImpl implements CarritoService {
         if (producto.getStock() < agregarItemDTO.getCantidad()) {
             throw new CarritoException("Stock insuficiente. Disponible: " + producto.getStock());
         }
+        
+        // Validar cantidad máxima por producto (10 unidades)
+        if (agregarItemDTO.getCantidad() > 10) {
+            throw new CarritoException("No se pueden agregar más de 10 unidades por producto");
+        }
 
         Optional<ItemCarrito> itemExistente = itemCarritoRepository
                 .findByCarritoIdCarritoAndIdProducto(carrito.getIdCarrito(), agregarItemDTO.getIdProducto());
@@ -113,6 +118,10 @@ public class CarritoServiceImpl implements CarritoService {
             
             if (producto.getStock() < nuevaCantidad) {
                 throw new CarritoException("Stock insuficiente. Disponible: " + producto.getStock());
+            }
+            
+            if (nuevaCantidad > 10) {
+                throw new CarritoException("No se pueden tener más de 10 unidades por producto");
             }
             
             item.setCantidad(nuevaCantidad);
@@ -150,6 +159,10 @@ public class CarritoServiceImpl implements CarritoService {
 
         if (producto.getStock() < cantidad) {
             throw new CarritoException("Stock insuficiente. Disponible: " + producto.getStock());
+        }
+        
+        if (cantidad > 10) {
+            throw new CarritoException("No se pueden tener más de 10 unidades por producto");
         }
 
         item.setCantidad(cantidad);

@@ -88,6 +88,11 @@ public class ReseñaServiceImpl implements ReseñaService {
             throw new ReseñaException("No se pudo guardar la reseña: Producto no existe");
         }
         
+        // Validar que no exista una reseña previa del mismo usuario para este producto
+        if (this.reseñaRepository.existsByIdUsuarioAndIdProducto(reseña.getIdUsuario(), reseña.getIdProducto())) {
+            throw new ReseñaException("Ya existe una reseña de este usuario para este producto");
+        }
+        
         Reseña saved = this.reseñaRepository.save(reseña);
         return convertToDTO(saved);
     }

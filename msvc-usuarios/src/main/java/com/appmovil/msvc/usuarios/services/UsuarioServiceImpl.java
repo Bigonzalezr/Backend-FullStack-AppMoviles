@@ -162,7 +162,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional(readOnly = true)
     public List<UsuarioDTO> searchByName(String searchTerm) {
-        return usuarioRepository.findByNombreContainingIgnoreCaseOrApellidoContainingIgnoreCase(searchTerm, searchTerm)
+        return usuarioRepository.searchByNameOrLastName(searchTerm)
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());

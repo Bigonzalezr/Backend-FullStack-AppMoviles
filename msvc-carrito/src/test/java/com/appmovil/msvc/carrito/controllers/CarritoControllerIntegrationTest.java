@@ -2,10 +2,10 @@ package com.appmovil.msvc.carrito.controllers;
 
 import com.appmovil.msvc.carrito.clients.ProductoClientRest;
 import com.appmovil.msvc.carrito.clients.UsuarioClientRest;
-import com.appmovil.msvc.carrito.model.Producto;
-import com.appmovil.msvc.carrito.model.Usuario;
-import com.appmovil.msvc.carrito.model.entity.Carrito;
-import com.appmovil.msvc.carrito.model.entity.ItemCarrito;
+import com.appmovil.msvc.carrito.clients.models.Producto;
+import com.appmovil.msvc.carrito.models.Usuario;
+import com.appmovil.msvc.carrito.entities.Carrito;
+import com.appmovil.msvc.carrito.entities.ItemCarrito;
 import com.appmovil.msvc.carrito.repositories.CarritoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

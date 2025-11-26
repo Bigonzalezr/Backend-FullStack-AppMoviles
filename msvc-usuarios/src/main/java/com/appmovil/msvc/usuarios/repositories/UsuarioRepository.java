@@ -2,6 +2,8 @@ package com.appmovil.msvc.usuarios.repositories;
 
 import com.appmovil.msvc.usuarios.models.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +25,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByRol(String rol);
     
     List<Usuario> findByNombreContainingIgnoreCaseOrApellidoContainingIgnoreCase(String nombre, String apellido);
+    
+    @Query("SELECT u FROM Usuario u WHERE LOWER(u.nombre) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR LOWER(u.apellido) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
+    List<Usuario> searchByNameOrLastName(@Param("searchTerm") String searchTerm);
 }

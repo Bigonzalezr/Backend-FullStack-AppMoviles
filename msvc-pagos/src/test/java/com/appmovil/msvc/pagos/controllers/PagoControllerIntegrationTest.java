@@ -71,7 +71,7 @@ class PagoControllerIntegrationTest {
         pedidoTest = new Pedido();
         pedidoTest.setIdPedido(1L);
         pedidoTest.setIdUsuario(1L);
-        pedidoTest.setTotal(2500);
+        pedidoTest.setTotal(new BigDecimal("2500"));
         pedidoTest.setEstado("PENDIENTE");
 
         procesarPagoDTO = new ProcesarPagoDTO();

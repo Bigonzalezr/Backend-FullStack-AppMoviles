@@ -17,39 +17,39 @@ import java.util.List;
 public class ResenaController {
 
     @Autowired
-    private ResenaService ResenaService;
+    private ResenaService resenaService;
 
     @GetMapping
     public ResponseEntity<List<ResenaDTO>> findAll() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(this.ResenaService.findAll());
+                .body(this.resenaService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResenaDTO> findById(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(this.ResenaService.findById(id));
+                .body(this.resenaService.findById(id));
     }
 
     @PostMapping
     public ResponseEntity<ResenaDTO> save(@RequestBody @Validated Resena Resena) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(this.ResenaService.save(Resena));
+                .body(this.resenaService.save(Resena));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ResenaDTO> update(@PathVariable Long id, @RequestBody @Validated Resena Resena) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(this.ResenaService.update(id, Resena));
+                .body(this.resenaService.update(id, Resena));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.ResenaService.delete(id);
+        this.resenaService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -57,20 +57,20 @@ public class ResenaController {
     public ResponseEntity<List<ResenaDTO>> findByUsuario(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(this.ResenaService.findByUsuario(id));
+                .body(this.resenaService.findByUsuario(id));
     }
 
     @GetMapping("/producto/{id}")
     public ResponseEntity<List<ResenaDTO>> findByProducto(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(this.ResenaService.findByProducto(id));
+                .body(this.resenaService.findByProducto(id));
     }
 
     @GetMapping("/producto/{id}/rating")
     public ResponseEntity<Double> getAverageRating(@PathVariable Long id) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(this.ResenaService.getAverageRatingByProducto(id));
+                .body(this.resenaService.getAverageRatingByProducto(id));
     }
 }

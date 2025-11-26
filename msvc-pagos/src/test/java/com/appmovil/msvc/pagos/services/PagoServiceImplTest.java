@@ -62,7 +62,7 @@ class PagoServiceImplTest {
         pedidoTest = new Pedido();
         pedidoTest.setIdPedido(1L);
         pedidoTest.setIdUsuario(1L);
-        pedidoTest.setTotal(1500);
+        pedidoTest.setTotal(new BigDecimal("1500"));
         pedidoTest.setEstado("PENDIENTE");
 
         pagoTest = Pago.builder()

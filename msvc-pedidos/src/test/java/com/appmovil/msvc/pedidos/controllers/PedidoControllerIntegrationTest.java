@@ -406,7 +406,6 @@ class PedidoControllerIntegrationTest {
         pedido.setMetodoPago("TARJETA");
         pedido.setNotas("Entrega en horario laboral");
         pedido.setSubtotal(2400);
-        pedido.setImpuestos(0);
         pedido.setTotal(2400);
         pedido.setDetalles(new ArrayList<>());
 
@@ -415,7 +414,6 @@ class PedidoControllerIntegrationTest {
         detalle.setIdProducto(1L);
         detalle.setCantidad(2);
         detalle.setPrecioUnitario(1200);
-        detalle.setSubtotal(2400);
 
         pedido.getDetalles().add(detalle);
 

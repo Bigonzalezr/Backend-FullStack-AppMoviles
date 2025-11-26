@@ -31,7 +31,7 @@ import static org.mockito.Mockito.*;
 class ResenaServiceImplTest {
 
     @Mock
-    private ResenaRepository ResenaRepository;
+    private ResenaRepository resenaRepository;
 
     @Mock
     private UsuarioClientRest usuarioClientRest;
@@ -40,51 +40,51 @@ class ResenaServiceImplTest {
     private ProductoClientRest productoClientRest;
 
     @InjectMocks
-    private ResenaServiceImpl ResenaService;
+    private ResenaServiceImpl resenaService;
 
-    private Resena ResenaTest;
+    private Resena resenaTest;
     private Usuario usuarioTest;
     private Producto productoTest;
 
     @BeforeEach
     void setUp() {
         usuarioTest = new Usuario();
-        usuarioTest.setIdUsuario(1L);
+        usuarioTest.setId(1L);
         usuarioTest.setNombre("Juan Pérez");
         usuarioTest.setActivo(true);
 
         productoTest = new Producto();
-        productoTest.setIdProducto(1L);
+        productoTest.setId(1L);
         productoTest.setNombre("iPhone 15");
         productoTest.setActivo(true);
 
-        ResenaTest = new Resena();
-        ResenaTest.setId(1L);
-        ResenaTest.setIdUsuario(1L);
-        ResenaTest.setIdProducto(1L);
-        ResenaTest.setRating(5);
-        ResenaTest.setComentario("Excelente producto, muy recomendado");
-        ResenaTest.setFechaCreacion(LocalDateTime.now());
-        ResenaTest.setActivo(true);
+        resenaTest = new Resena();
+        resenaTest.setId(1L);
+        resenaTest.setIdUsuario(1L);
+        resenaTest.setIdProducto(1L);
+        resenaTest.setRating(5);
+        resenaTest.setComentario("Excelente producto, muy recomendado");
+        resenaTest.setFechaCreacion(LocalDateTime.now());
+        resenaTest.setActivo(true);
     }
 
     @Test
     @DisplayName("findAll - Debe retornar lista de Resenas enriquecidas")
     void testFindAll_DebeRetornarListaEnriquecida() {
         // Given
-        when(ResenaRepository.findAll()).thenReturn(Arrays.asList(ResenaTest));
+        when(resenaRepository.findAll()).thenReturn(Arrays.asList(resenaTest));
         when(usuarioClientRest.findById(1L)).thenReturn(usuarioTest);
         when(productoClientRest.findById(1L)).thenReturn(productoTest);
 
         // When
-        List<ResenaDTO> resultado = ResenaService.findAll();
+        List<ResenaDTO> resultado = resenaService.findAll();
 
         // Then
         assertThat(resultado).hasSize(1);
         assertThat(resultado.get(0).getNombreUsuario()).isEqualTo("Juan Pérez");
         assertThat(resultado.get(0).getNombreProducto()).isEqualTo("iPhone 15");
         assertThat(resultado.get(0).getRating()).isEqualTo(5);
-        verify(ResenaRepository).findAll();
+        verify(resenaRepository).findAll();
         verify(usuarioClientRest).findById(1L);
         verify(productoClientRest).findById(1L);
     }
@@ -93,32 +93,32 @@ class ResenaServiceImplTest {
     @DisplayName("findById - Debe retornar Resena cuando existe")
     void testFindById_ConIdExistente_DebeRetornarResena() {
         // Given
-        when(ResenaRepository.findById(1L)).thenReturn(Optional.of(ResenaTest));
+        when(resenaRepository.findById(1L)).thenReturn(Optional.of(resenaTest));
         when(usuarioClientRest.findById(1L)).thenReturn(usuarioTest);
         when(productoClientRest.findById(1L)).thenReturn(productoTest);
 
         // When
-        ResenaDTO resultado = ResenaService.findById(1L);
+        ResenaDTO resultado = resenaService.findById(1L);
 
         // Then
         assertThat(resultado).isNotNull();
         assertThat(resultado.getId()).isEqualTo(1L);
         assertThat(resultado.getComentario()).isEqualTo("Excelente producto, muy recomendado");
-        verify(ResenaRepository).findById(1L);
+        verify(resenaRepository).findById(1L);
     }
 
     @Test
     @DisplayName("findById - Debe lanzar excepción cuando Resena no existe")
     void testFindById_ConIdInexistente_DebeLanzarExcepcion() {
         // Given
-        when(ResenaRepository.findById(999L)).thenReturn(Optional.empty());
+        when(resenaRepository.findById(999L)).thenReturn(Optional.empty());
 
         // When & Then
-        assertThatThrownBy(() -> ResenaService.findById(999L))
+        assertThatThrownBy(() -> resenaService.findById(999L))
                 .isInstanceOf(ResenaException.class)
                 .hasMessageContaining("999");
         
-        verify(ResenaRepository).findById(999L);
+        verify(resenaRepository).findById(999L);
     }
 
     @Test
@@ -127,23 +127,23 @@ class ResenaServiceImplTest {
         // Given
         when(usuarioClientRest.findById(1L)).thenReturn(usuarioTest);
         when(productoClientRest.findById(1L)).thenReturn(productoTest);
-        when(ResenaRepository.existsByIdUsuarioAndIdProducto(1L, 1L)).thenReturn(false);
-        when(ResenaRepository.save(any(Resena.class))).thenAnswer(inv -> {
+        when(resenaRepository.existsByIdUsuarioAndIdProducto(1L, 1L)).thenReturn(false);
+        when(resenaRepository.save(any(Resena.class))).thenAnswer(inv -> {
             Resena r = inv.getArgument(0);
             r.setId(1L);
             return r;
         });
 
         // When
-        ResenaDTO resultado = ResenaService.save(ResenaTest);
+        ResenaDTO resultado = resenaService.save(resenaTest);
 
         // Then
         assertThat(resultado).isNotNull();
         assertThat(resultado.getRating()).isEqualTo(5);
         verify(usuarioClientRest).findById(1L);
         verify(productoClientRest).findById(1L);
-        verify(ResenaRepository).existsByIdUsuarioAndIdProducto(1L, 1L);
-        verify(ResenaRepository).save(any(Resena.class));
+        verify(resenaRepository).existsByIdUsuarioAndIdProducto(1L, 1L);
+        verify(resenaRepository).save(any(Resena.class));
     }
 
     @Test
@@ -153,11 +153,11 @@ class ResenaServiceImplTest {
         when(usuarioClientRest.findById(1L)).thenThrow(mock(FeignException.class));
 
         // When & Then
-        assertThatThrownBy(() -> ResenaService.save(ResenaTest))
+        assertThatThrownBy(() -> resenaService.save(resenaTest))
                 .isInstanceOf(ResenaException.class)
                 .hasMessageContaining("Usuario no existe");
         
-        verify(ResenaRepository, never()).save(any());
+        verify(resenaRepository, never()).save(any());
     }
 
     @Test
@@ -168,11 +168,11 @@ class ResenaServiceImplTest {
         when(productoClientRest.findById(1L)).thenThrow(mock(FeignException.class));
 
         // When & Then
-        assertThatThrownBy(() -> ResenaService.save(ResenaTest))
+        assertThatThrownBy(() -> resenaService.save(resenaTest))
                 .isInstanceOf(ResenaException.class)
                 .hasMessageContaining("Producto no existe");
         
-        verify(ResenaRepository, never()).save(any());
+        verify(resenaRepository, never()).save(any());
     }
 
     @Test
@@ -181,14 +181,14 @@ class ResenaServiceImplTest {
         // Given
         when(usuarioClientRest.findById(1L)).thenReturn(usuarioTest);
         when(productoClientRest.findById(1L)).thenReturn(productoTest);
-        when(ResenaRepository.existsByIdUsuarioAndIdProducto(1L, 1L)).thenReturn(true);
+        when(resenaRepository.existsByIdUsuarioAndIdProducto(1L, 1L)).thenReturn(true);
 
         // When & Then
-        assertThatThrownBy(() -> ResenaService.save(ResenaTest))
+        assertThatThrownBy(() -> resenaService.save(resenaTest))
                 .isInstanceOf(ResenaException.class)
                 .hasMessageContaining("Ya existe una Resena");
         
-        verify(ResenaRepository, never()).save(any());
+        verify(resenaRepository, never()).save(any());
     }
 
     @Test
@@ -199,18 +199,18 @@ class ResenaServiceImplTest {
         ResenaActualizada.setRating(4);
         ResenaActualizada.setComentario("Actualizado: Buen producto pero mejorable");
 
-        when(ResenaRepository.findById(1L)).thenReturn(Optional.of(ResenaTest));
-        when(ResenaRepository.save(any(Resena.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(resenaRepository.findById(1L)).thenReturn(Optional.of(resenaTest));
+        when(resenaRepository.save(any(Resena.class))).thenAnswer(inv -> inv.getArgument(0));
         when(usuarioClientRest.findById(1L)).thenReturn(usuarioTest);
         when(productoClientRest.findById(1L)).thenReturn(productoTest);
 
         // When
-        ResenaDTO resultado = ResenaService.update(1L, ResenaActualizada);
+        ResenaDTO resultado = resenaService.update(1L, ResenaActualizada);
 
         // Then
         assertThat(resultado.getRating()).isEqualTo(4);
         assertThat(resultado.getComentario()).contains("Actualizado");
-        verify(ResenaRepository).save(argThat(r -> 
+        verify(resenaRepository).save(argThat(r -> 
             r.getRating() == 4 && r.getComentario().contains("Actualizado")
         ));
     }
@@ -219,100 +219,100 @@ class ResenaServiceImplTest {
     @DisplayName("update - Debe lanzar excepción si Resena no existe")
     void testUpdate_ConIdInexistente_DebeLanzarExcepcion() {
         // Given
-        when(ResenaRepository.findById(999L)).thenReturn(Optional.empty());
+        when(resenaRepository.findById(999L)).thenReturn(Optional.empty());
 
         // When & Then
-        assertThatThrownBy(() -> ResenaService.update(999L, ResenaTest))
+        assertThatThrownBy(() -> resenaService.update(999L, resenaTest))
                 .isInstanceOf(ResenaException.class)
                 .hasMessageContaining("999");
         
-        verify(ResenaRepository, never()).save(any());
+        verify(resenaRepository, never()).save(any());
     }
 
     @Test
     @DisplayName("delete - Debe desactivar Resena (soft delete)")
     void testDelete_DebeDesactivarResena() {
         // Given
-        when(ResenaRepository.findById(1L)).thenReturn(Optional.of(ResenaTest));
-        when(ResenaRepository.save(any(Resena.class))).thenAnswer(inv -> inv.getArgument(0));
+        when(resenaRepository.findById(1L)).thenReturn(Optional.of(resenaTest));
+        when(resenaRepository.save(any(Resena.class))).thenAnswer(inv -> inv.getArgument(0));
 
         // When
-        ResenaService.delete(1L);
+        resenaService.delete(1L);
 
         // Then
-        verify(ResenaRepository).save(argThat(r -> !r.getActivo()));
+        verify(resenaRepository).save(argThat(r -> !r.getActivo()));
     }
 
     @Test
     @DisplayName("delete - Debe lanzar excepción si Resena no existe")
     void testDelete_ConIdInexistente_DebeLanzarExcepcion() {
         // Given
-        when(ResenaRepository.findById(999L)).thenReturn(Optional.empty());
+        when(resenaRepository.findById(999L)).thenReturn(Optional.empty());
 
         // When & Then
-        assertThatThrownBy(() -> ResenaService.delete(999L))
+        assertThatThrownBy(() -> resenaService.delete(999L))
                 .isInstanceOf(ResenaException.class);
         
-        verify(ResenaRepository, never()).save(any());
+        verify(resenaRepository, never()).save(any());
     }
 
     @Test
     @DisplayName("findByUsuario - Debe retornar Resenas del usuario")
     void testFindByUsuario_DebeRetornarResenasDelUsuario() {
         // Given
-        when(ResenaRepository.findByIdUsuario(1L)).thenReturn(Arrays.asList(ResenaTest));
+        when(resenaRepository.findByIdUsuario(1L)).thenReturn(Arrays.asList(resenaTest));
         when(usuarioClientRest.findById(1L)).thenReturn(usuarioTest);
         when(productoClientRest.findById(1L)).thenReturn(productoTest);
 
         // When
-        List<ResenaDTO> resultado = ResenaService.findByUsuario(1L);
+        List<ResenaDTO> resultado = resenaService.findByUsuario(1L);
 
         // Then
         assertThat(resultado).hasSize(1);
         assertThat(resultado.get(0).getIdUsuario()).isEqualTo(1L);
-        verify(ResenaRepository).findByIdUsuario(1L);
+        verify(resenaRepository).findByIdUsuario(1L);
     }
 
     @Test
     @DisplayName("findByProducto - Debe retornar solo Resenas activas del producto")
     void testFindByProducto_DebeRetornarSoloResenasActivas() {
         // Given
-        when(ResenaRepository.findByIdProductoAndActivo(1L, true)).thenReturn(Arrays.asList(ResenaTest));
+        when(resenaRepository.findByIdProductoAndActivo(1L, true)).thenReturn(Arrays.asList(resenaTest));
         when(usuarioClientRest.findById(1L)).thenReturn(usuarioTest);
         when(productoClientRest.findById(1L)).thenReturn(productoTest);
 
         // When
-        List<ResenaDTO> resultado = ResenaService.findByProducto(1L);
+        List<ResenaDTO> resultado = resenaService.findByProducto(1L);
 
         // Then
         assertThat(resultado).hasSize(1);
         assertThat(resultado.get(0).getActivo()).isTrue();
         assertThat(resultado.get(0).getIdProducto()).isEqualTo(1L);
-        verify(ResenaRepository).findByIdProductoAndActivo(1L, true);
+        verify(resenaRepository).findByIdProductoAndActivo(1L, true);
     }
 
     @Test
     @DisplayName("getAverageRatingByProducto - Debe calcular promedio correcto")
     void testGetAverageRatingByProducto_DebeCalcularPromedio() {
         // Given
-        when(ResenaRepository.findAverageRatingByProducto(1L)).thenReturn(4.5);
+        when(resenaRepository.findAverageRatingByProducto(1L)).thenReturn(4.5);
 
         // When
-        Double promedio = ResenaService.getAverageRatingByProducto(1L);
+        Double promedio = resenaService.getAverageRatingByProducto(1L);
 
         // Then
         assertThat(promedio).isEqualTo(4.5);
-        verify(ResenaRepository).findAverageRatingByProducto(1L);
+        verify(resenaRepository).findAverageRatingByProducto(1L);
     }
 
     @Test
     @DisplayName("getAverageRatingByProducto - Debe retornar 0.0 si no hay Resenas")
     void testGetAverageRatingByProducto_SinResenas_DebeRetornar0() {
         // Given
-        when(ResenaRepository.findAverageRatingByProducto(1L)).thenReturn(null);
+        when(resenaRepository.findAverageRatingByProducto(1L)).thenReturn(null);
 
         // When
-        Double promedio = ResenaService.getAverageRatingByProducto(1L);
+        Double promedio = resenaService.getAverageRatingByProducto(1L);
 
         // Then
         assertThat(promedio).isEqualTo(0.0);
@@ -322,11 +322,11 @@ class ResenaServiceImplTest {
     @DisplayName("findAll - Debe lanzar excepción si falla obtener usuario")
     void testFindAll_ErrorUsuario_DebeLanzarExcepcion() {
         // Given
-        when(ResenaRepository.findAll()).thenReturn(Arrays.asList(ResenaTest));
+        when(resenaRepository.findAll()).thenReturn(Arrays.asList(resenaTest));
         when(usuarioClientRest.findById(1L)).thenThrow(mock(FeignException.class));
 
         // When & Then
-        assertThatThrownBy(() -> ResenaService.findAll())
+        assertThatThrownBy(() -> resenaService.findAll())
                 .isInstanceOf(ResenaException.class)
                 .hasMessageContaining("usuario no existe");
     }
@@ -335,12 +335,12 @@ class ResenaServiceImplTest {
     @DisplayName("findAll - Debe lanzar excepción si falla obtener producto")
     void testFindAll_ErrorProducto_DebeLanzarExcepcion() {
         // Given
-        when(ResenaRepository.findAll()).thenReturn(Arrays.asList(ResenaTest));
+        when(resenaRepository.findAll()).thenReturn(Arrays.asList(resenaTest));
         when(usuarioClientRest.findById(1L)).thenReturn(usuarioTest);
         when(productoClientRest.findById(1L)).thenThrow(mock(FeignException.class));
 
         // When & Then
-        assertThatThrownBy(() -> ResenaService.findAll())
+        assertThatThrownBy(() -> resenaService.findAll())
                 .isInstanceOf(ResenaException.class)
                 .hasMessageContaining("producto no existe");
     }

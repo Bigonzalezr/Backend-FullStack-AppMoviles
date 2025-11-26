@@ -42,39 +42,39 @@ class ResenaControllerIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private ResenaRepository ResenaRepository;
+    private ResenaRepository resenaRepository;
 
- 
+    @MockBean
     private UsuarioClientRest usuarioClientRest;
 
-   
+    @MockBean
     private ProductoClientRest productoClientRest;
 
     private Usuario usuarioTest;
     private Producto productoTest;
-    private Resena ResenaTest;
+    private Resena resenaTest;
 
     @BeforeEach
     void setUp() {
-        ResenaRepository.deleteAll();
+        resenaRepository.deleteAll();
 
         usuarioTest = new Usuario();
-        usuarioTest.setIdUsuario(1L);
+        usuarioTest.setId(1L);
         usuarioTest.setNombre("Carlos Mendoza");
         usuarioTest.setActivo(true);
 
         productoTest = new Producto();
-        productoTest.setIdProducto(1L);
+        productoTest.setId(1L);
         productoTest.setNombre("Samsung Galaxy S23");
         productoTest.setActivo(true);
 
-        ResenaTest = new Resena();
-        ResenaTest.setIdUsuario(1L);
-        ResenaTest.setIdProducto(1L);
-        ResenaTest.setRating(5);
-        ResenaTest.setComentario("Excelente teléfono, muy buena cámara y rendimiento");
-        ResenaTest.setFechaCreacion(LocalDateTime.now());
-        ResenaTest.setActivo(true);
+        resenaTest = new Resena();
+        resenaTest.setIdUsuario(1L);
+        resenaTest.setIdProducto(1L);
+        resenaTest.setRating(5);
+        resenaTest.setComentario("Excelente teléfono, muy buena cámara y rendimiento");
+        resenaTest.setFechaCreacion(LocalDateTime.now());
+        resenaTest.setActivo(true);
 
         when(usuarioClientRest.findById(anyLong())).thenReturn(usuarioTest);
         when(productoClientRest.findById(anyLong())).thenReturn(productoTest);
@@ -86,7 +86,7 @@ class ResenaControllerIntegrationTest {
         // When & Then
         mockMvc.perform(post("/api/resenas")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(ResenaTest)))
+                .content(objectMapper.writeValueAsString(resenaTest)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.idUsuario").value(1))
@@ -96,20 +96,20 @@ class ResenaControllerIntegrationTest {
                 .andExpect(jsonPath("$.nombreUsuario").value("Carlos Mendoza"))
                 .andExpect(jsonPath("$.nombreProducto").value("Samsung Galaxy S23"));
 
-        assertThat(ResenaRepository.count()).isEqualTo(1);
+        assertThat(resenaRepository.count()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("POST /api/resenas - Debe retornar 400 con campos inválidos")
     void testCrearResena_ConCamposInvalidos_DebeRetornar400() throws Exception {
         // Given
-        ResenaTest.setRating(6); // Rating inválido (máximo 5)
-        ResenaTest.setComentario("Corto"); // Comentario muy corto (mínimo 10)
+        resenaTest.setRating(6); // Rating inválido (máximo 5)
+        resenaTest.setComentario("Corto"); // Comentario muy corto (mínimo 10)
 
         // When & Then
         mockMvc.perform(post("/api/resenas")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(ResenaTest)))
+                .content(objectMapper.writeValueAsString(resenaTest)))
                 .andExpect(status().isBadRequest());
     }
 
@@ -117,7 +117,7 @@ class ResenaControllerIntegrationTest {
     @DisplayName("POST /api/resenas - Debe retornar 400 con Resena duplicada")
     void testCrearResena_Duplicada_DebeRetornar400() throws Exception {
         // Given - Crear primera Resena
-        ResenaRepository.save(ResenaTest);
+        resenaRepository.save(resenaTest);
 
         // When & Then - Intentar crear segunda Resena del mismo usuario/producto
         Resena duplicada = new Resena();
@@ -137,7 +137,7 @@ class ResenaControllerIntegrationTest {
     @DisplayName("GET /api/resenas/{id} - Debe retornar Resena por ID")
     void testFindById_ConIdValido_DebeRetornarResena() throws Exception {
         // Given
-        Resena guardada = ResenaRepository.save(ResenaTest);
+        Resena guardada = resenaRepository.save(resenaTest);
 
         // When & Then
         mockMvc.perform(get("/api/resenas/{id}", guardada.getId()))
@@ -159,7 +159,7 @@ class ResenaControllerIntegrationTest {
     @DisplayName("PUT /api/resenas/{id} - Debe actualizar Resena")
     void testUpdate_ConDatosValidos_DebeActualizar() throws Exception {
         // Given
-        Resena guardada = ResenaRepository.save(ResenaTest);
+        Resena guardada = resenaRepository.save(resenaTest);
 
         Resena actualizada = new Resena();
         actualizada.setRating(4);
@@ -173,7 +173,7 @@ class ResenaControllerIntegrationTest {
                 .andExpect(jsonPath("$.rating").value(4))
                 .andExpect(jsonPath("$.comentario", containsString("Actualizando")));
 
-        Resena enDB = ResenaRepository.findById(guardada.getId()).orElseThrow();
+        Resena enDB = resenaRepository.findById(guardada.getId()).orElseThrow();
         assertThat(enDB.getRating()).isEqualTo(4);
     }
 
@@ -181,13 +181,13 @@ class ResenaControllerIntegrationTest {
     @DisplayName("DELETE /api/resenas/{id} - Debe desactivar Resena")
     void testDelete_DebeDesactivarResena() throws Exception {
         // Given
-        Resena guardada = ResenaRepository.save(ResenaTest);
+        Resena guardada = resenaRepository.save(resenaTest);
 
         // When & Then
         mockMvc.perform(delete("/api/resenas/{id}", guardada.getId()))
                 .andExpect(status().isNoContent());
 
-        Resena enDB = ResenaRepository.findById(guardada.getId()).orElseThrow();
+        Resena enDB = resenaRepository.findById(guardada.getId()).orElseThrow();
         assertThat(enDB.getActivo()).isFalse();
     }
 
@@ -195,7 +195,7 @@ class ResenaControllerIntegrationTest {
     @DisplayName("GET /api/resenas/usuario/{idUsuario} - Debe retornar Resenas del usuario")
     void testFindByUsuario_DebeRetornarResenasDelUsuario() throws Exception {
         // Given
-        ResenaRepository.save(ResenaTest);
+        resenaRepository.save(resenaTest);
 
         // When & Then
         mockMvc.perform(get("/api/resenas/usuario/{idUsuario}", 1L))
@@ -208,7 +208,7 @@ class ResenaControllerIntegrationTest {
     @DisplayName("GET /api/resenas/producto/{idProducto} - Debe retornar solo Resenas activas")
     void testFindByProducto_DebeRetornarSoloActivas() throws Exception {
         // Given
-        ResenaRepository.save(ResenaTest);
+        resenaRepository.save(resenaTest);
 
         Resena inactiva = new Resena();
         inactiva.setIdUsuario(2L);
@@ -216,7 +216,7 @@ class ResenaControllerIntegrationTest {
         inactiva.setRating(3);
         inactiva.setComentario("Esta Resena está desactivada por algún motivo");
         inactiva.setActivo(false);
-        ResenaRepository.save(inactiva);
+        resenaRepository.save(inactiva);
 
         // When & Then
         mockMvc.perform(get("/api/resenas/producto/{idProducto}", 1L))
@@ -229,7 +229,7 @@ class ResenaControllerIntegrationTest {
     @DisplayName("GET /api/resenas/producto/{idProducto}/promedio - Debe calcular promedio")
     void testGetAverageRating_DebeCalcularPromedio() throws Exception {
         // Given
-        ResenaRepository.save(ResenaTest); // Rating 5
+        resenaRepository.save(resenaTest); // Rating 5
 
         Resena Resena2 = new Resena();
         Resena2.setIdUsuario(2L);
@@ -237,7 +237,7 @@ class ResenaControllerIntegrationTest {
         Resena2.setRating(3);
         Resena2.setComentario("Es bueno pero le falta algo, esperaba más");
         Resena2.setActivo(true);
-        ResenaRepository.save(Resena2); // Rating 3
+        resenaRepository.save(Resena2); // Rating 3
 
         // When & Then
         mockMvc.perform(get("/api/resenas/producto/{idProducto}/promedio", 1L))
@@ -260,7 +260,7 @@ class ResenaControllerIntegrationTest {
         // 1. Crear Resena
         String response = mockMvc.perform(post("/api/resenas")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(ResenaTest)))
+                .content(objectMapper.writeValueAsString(resenaTest)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -292,7 +292,7 @@ class ResenaControllerIntegrationTest {
                 .andExpect(status().isNoContent());
 
         // Verificar que existe pero está inactiva
-        Resena enDB = ResenaRepository.findById(idResena).orElseThrow();
+        Resena enDB = resenaRepository.findById(idResena).orElseThrow();
         assertThat(enDB.getActivo()).isFalse();
     }
 }

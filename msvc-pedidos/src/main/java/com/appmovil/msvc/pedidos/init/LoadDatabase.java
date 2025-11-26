@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
 
 @Profile("dev")
@@ -26,7 +25,7 @@ public class LoadDatabase implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Faker faker = new Faker(new Locale("es", "CL"));
+        Faker faker = new Faker(Locale.of("es", "CL"));
 
         if (pedidoRepository.count() == 0) {
             log.info("Iniciando la precarga de 100 Pedidos de LevelUp Gamer...");
@@ -39,7 +38,7 @@ public class LoadDatabase implements CommandLineRunner {
                 pedido.setIdUsuario((long) faker.number().numberBetween(1, 10)); // 10 usuarios de prueba
 
                 // 2. Definir la fecha
-                pedido.setFechaCompra(LocalDateTime.now().minusDays(faker.number().numberBetween(1, 90)));
+                pedido.setFechaPedido(LocalDateTime.now().minusDays(faker.number().numberBetween(1, 90)));
 
                 // 3. Crear los detalles (productos)
                 int numDetalles = faker.number().numberBetween(1, 4);

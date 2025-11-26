@@ -76,11 +76,37 @@ public class ProductoServiceImpl implements ProductoService {
 
  @Override
  @Transactional(readOnly = true)
+ public List<Producto> findActivos() {
+  return productoRepository.findByActivo(true);
+ }
+
+ @Override
+ @Transactional(readOnly = true)
  public List<Producto> findByCategoria(String categoria) {
   if ("todos".equalsIgnoreCase(categoria)) {
-   return findAll();
+   return findActivos();
   }
 
-  return productoRepository.findByCategoriaIgnoreCase(categoria);
+  return productoRepository.findByCategoriaIgnoreCaseAndActivo(categoria, true);
+ }
+
+ @Override
+ @Transactional(readOnly = true)
+ public List<Producto> buscarPorNombre(String nombre) {
+  return productoRepository.findByNombreContainingIgnoreCase(nombre);
+ }
+
+ @Override
+ @Transactional
+ public Producto actualizarStock(Long id, Integer cantidad) {
+  Producto producto = findById(id);
+  
+  Integer nuevoStock = producto.getStock() + cantidad;
+  if (nuevoStock < 0) {
+   throw new ProductoException("Stock insuficiente para el producto: " + producto.getNombre());
+  }
+  
+  producto.setStock(nuevoStock);
+  return productoRepository.save(producto);
  }
 }

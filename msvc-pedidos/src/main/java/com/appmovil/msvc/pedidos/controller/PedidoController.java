@@ -1,62 +1,79 @@
 package com.appmovil.msvc.pedidos.controller;
 
+import com.appmovil.msvc.pedidos.dtos.PedidoCreationDTO;
 import com.appmovil.msvc.pedidos.dtos.PedidoDTO;
-import com.appmovil.msvc.pedidos.model.entity.Pedido;
 import com.appmovil.msvc.pedidos.services.PedidoService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/pedidos") //
+@RequestMapping("/api/v1/pedidos")
+@Validated
+@Slf4j
 public class PedidoController {
 
     @Autowired
     private PedidoService pedidoService;
 
+    @PostMapping
+    public ResponseEntity<PedidoDTO> crearPedido(@RequestBody @Valid PedidoCreationDTO creationDTO) {
+        log.info("Recibida solicitud para crear pedido: {}", creationDTO);
+        PedidoDTO pedido = pedidoService.crearPedido(creationDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pedido);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoDTO> findById(@PathVariable Long id) {
+        PedidoDTO pedido = pedidoService.findById(id);
+        return ResponseEntity.ok(pedido);
+    }
 
     @GetMapping
     public ResponseEntity<List<PedidoDTO>> findAll() {
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(this.pedidoService.findAll());
+        List<PedidoDTO> pedidos = pedidoService.findAll();
+        return ResponseEntity.ok(pedidos);
     }
 
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Pedido> findById(@PathVariable Long id) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(this.pedidoService.findById(id));
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<PedidoDTO>> findByUsuario(@PathVariable Long idUsuario) {
+        List<PedidoDTO> pedidos = pedidoService.findByUsuario(idUsuario);
+        return ResponseEntity.ok(pedidos);
     }
 
-
-    @PostMapping
-    public ResponseEntity<Pedido> save(@RequestBody @Valid Pedido pedido) {
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(this.pedidoService.save(pedido));
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<PedidoDTO>> findByEstado(@PathVariable String estado) {
+        List<PedidoDTO> pedidos = pedidoService.findByEstado(estado);
+        return ResponseEntity.ok(pedidos);
     }
 
-
-    @GetMapping("/usuario/{id}")
-    public ResponseEntity<List<Pedido>> findByIdUsuario(@PathVariable Long id) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(this.pedidoService.findByIdUsuario(id));
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<PedidoDTO> actualizarEstado(
+            @PathVariable Long id,
+            @RequestBody Map<String, String> body) {
+        String nuevoEstado = body.get("estado");
+        PedidoDTO pedido = pedidoService.actualizarEstado(id, nuevoEstado);
+        return ResponseEntity.ok(pedido);
     }
 
+    @PatchMapping("/{id}/estado-pago")
+    public ResponseEntity<Void> actualizarEstadoPago(@PathVariable Long id) {
+        log.info("Actualizando estado de pago del pedido: {}", id);
+        pedidoService.actualizarEstadoPago(id);
+        return ResponseEntity.ok().build();
+    }
 
-    @GetMapping("/producto/{id}")
-    public ResponseEntity<List<Pedido>> findByProductoId(@PathVariable Long id) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(this.pedidoService.findByProductoId(id));
+    @DeleteMapping("/{id}/cancelar")
+    public ResponseEntity<Void> cancelarPedido(@PathVariable Long id) {
+        log.info("Cancelando pedido: {}", id);
+        pedidoService.cancelarPedido(id);
+        return ResponseEntity.noContent().build();
     }
 }

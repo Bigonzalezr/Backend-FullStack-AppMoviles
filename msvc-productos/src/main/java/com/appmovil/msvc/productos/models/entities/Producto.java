@@ -37,6 +37,18 @@ public class Producto {
     @NotNull(message = "El stock es obligatorio")
     private Integer stock;
 
-    @NotNull(message = "El rating es obligatorio")
-    private Double rating; // Mapea a 'rating' de React
+    @Column(nullable = false)
+    private Boolean activo = true;
+
+    private Double rating = 0.0;
+
+    @PrePersist
+    protected void onCreate() {
+        if (activo == null) {
+            activo = true;
+        }
+        if (rating == null) {
+            rating = 0.0;
+        }
+    }
 }

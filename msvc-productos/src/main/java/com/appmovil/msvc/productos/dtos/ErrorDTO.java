@@ -1,23 +1,20 @@
 package com.appmovil.msvc.productos.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
-import java.util.Date;
+import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ErrorDTO {
     private Integer status;
-    private Date date;
-    private Map<String, String> errors;
-
-    @Override
-    public String toString() {
-        return "{" +
-                "status=" + status +
-                ", date=" + date +
-                ", errors=" + errors +
-                '}';
-    }
+    private String mensaje;
+    private LocalDateTime timestamp;
+    private String path;
+    private Map<String, String> errores;
 }

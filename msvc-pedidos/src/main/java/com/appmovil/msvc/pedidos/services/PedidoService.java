@@ -2,22 +2,23 @@ package com.appmovil.msvc.pedidos.services;
 
 import com.appmovil.msvc.pedidos.dtos.PedidoCreationDTO;
 import com.appmovil.msvc.pedidos.dtos.PedidoDTO;
-import com.appmovil.msvc.pedidos.model.entity.Pedido;
 import java.util.List;
 
 public interface PedidoService {
 
-    Pedido createPedido(PedidoCreationDTO creationDTO);
+    PedidoDTO crearPedido(PedidoCreationDTO creationDTO);
 
-    Pedido save(Pedido pedido);
+    PedidoDTO actualizarEstado(Long idPedido, String nuevoEstado);
 
-    void delete(Long id);
+    void actualizarEstadoPago(Long idPedido);
+
+    PedidoDTO findById(Long id);
 
     List<PedidoDTO> findAll();
 
-    Pedido findById(Long id);
+    List<PedidoDTO> findByUsuario(Long idUsuario);
 
-    List<Pedido> findByIdUsuario(Long idUsuario);
+    List<PedidoDTO> findByEstado(String estado);
 
-    List<Pedido> findByProductoId(Long idProducto);
+    void cancelarPedido(Long idPedido);
 }

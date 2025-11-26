@@ -1,4 +1,4 @@
-package com.edutech.msvc.prueba.dtos;
+package com.appmovil.msvc.prueba.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

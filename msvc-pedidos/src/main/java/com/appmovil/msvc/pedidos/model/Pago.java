@@ -9,15 +9,19 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Pago {
-
     private Long idPago;
     private Long idPedido;
     private Long idUsuario;
-
-    private Integer montoTotal;
+    private Integer monto;
     private String metodoPago;
-
-    private String estadoTransaccion;
+    private String estado;
     private LocalDateTime fechaPago;
+    private LocalDateTime fechaProcesamiento;
+    private String numeroTransaccion;
+    private String numeroAutorizacion;
+    private String gatewayPago;
+    private String descripcion;
+    private String mensajeError;
 }

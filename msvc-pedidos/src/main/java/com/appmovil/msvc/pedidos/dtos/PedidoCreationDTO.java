@@ -6,8 +6,12 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import java.util.List;
 
-@Getter @Setter @ToString
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PedidoCreationDTO {
 
     @NotNull(message = "El ID de usuario es obligatorio")
@@ -18,5 +22,11 @@ public class PedidoCreationDTO {
     @Valid
     private List<PedidoDetalleDTO> detalles;
 
+    @NotNull(message = "La dirección de envío es obligatoria")
+    @Size(min = 10, max = 500, message = "La dirección debe tener entre 10 y 500 caracteres")
+    private String direccionEnvio;
+
     private String metodoPago;
+    
+    private String notas;
 }

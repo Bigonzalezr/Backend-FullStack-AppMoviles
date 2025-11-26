@@ -9,7 +9,7 @@
         <version>3.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.edutech</groupId>
+    <groupId>com.appmovil</groupId>
     <artifactId>appmovil</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -20,7 +20,7 @@
         <module>msvc-pagos</module>
         <module>msvc-pedidos</module>
         <module>msvc-productos</module>
-        <module>msvc-reseñas</module>
+        <module>msvc-resenas</module>
         <module>msvc-usuarios</module>
     </modules>
     <properties>

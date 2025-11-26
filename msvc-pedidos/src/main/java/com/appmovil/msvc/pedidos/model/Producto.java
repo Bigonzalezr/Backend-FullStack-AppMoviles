@@ -8,13 +8,15 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Producto {
-
-    private Long id;
+    private Long idProducto;
     private String nombre;
-    private String categoria;
+    private String descripcion;
     private Integer precio;
-    private String imagen;
     private Integer stock;
-
+    private String categoria;
+    private String imagen;
+    private Boolean activo;
+    private Double rating;
 }

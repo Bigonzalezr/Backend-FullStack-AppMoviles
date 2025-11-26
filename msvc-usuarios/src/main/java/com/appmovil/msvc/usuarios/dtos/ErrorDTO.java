@@ -1,4 +1,4 @@
-package com.appmovil.msvc.boleta.dtos;
+package com.appmovil.msvc.usuarios.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

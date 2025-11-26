@@ -26,14 +26,23 @@ public class Pedido {
     @Column(nullable = false)
     private String estado = "PENDIENTE";
 
-    @Column(name = "fecha_compra", nullable = false)
-    @NotNull(message = "La fecha de compra es obligatoria")
-    private LocalDateTime fechaCompra = LocalDateTime.now();
+    @Column(name = "fecha_pedido", nullable = false)
+    @NotNull(message = "La fecha del pedido es obligatoria")
+    private LocalDateTime fechaPedido = LocalDateTime.now();
+
+    @Column(name = "direccion_envio", length = 500)
+    private String direccionEnvio;
+
+    @Column(name = "metodo_pago", length = 50)
+    private String metodoPago;
+
+    @Column(name = "notas", columnDefinition = "TEXT")
+    private String notas;
 
     // Campos de resumen financiero
     private Integer subtotal;
     private Integer costoEnvio;
-    private Integer totalFinal;
+    private Integer total;
 
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -47,14 +56,24 @@ public class Pedido {
     }
 
 
-    @PrePersist @PreUpdate
+    @PrePersist
+    @PreUpdate
     public void calcularTotales() {
         this.subtotal = detalles.stream()
                 .mapToInt(d -> d.getPrecioUnitario() * d.getCantidad())
                 .sum();
 
-        this.costoEnvio = (this.subtotal > 200000) ? 0 : 3000;
+        this.costoEnvio = (this.subtotal > 50000) ? 0 : 5000;
 
-        this.totalFinal = this.subtotal + this.costoEnvio;
+        this.total = this.subtotal + this.costoEnvio;
+    }
+
+    public void agregarItem(Long idProducto, String nombreProducto, Integer precioUnitario, Integer cantidad) {
+        PedidoDetalle detalle = new PedidoDetalle();
+        detalle.setIdProducto(idProducto);
+        detalle.setNombreProducto(nombreProducto);
+        detalle.setPrecioUnitario(precioUnitario);
+        detalle.setCantidad(cantidad);
+        this.agregarDetalle(detalle);
     }
 }

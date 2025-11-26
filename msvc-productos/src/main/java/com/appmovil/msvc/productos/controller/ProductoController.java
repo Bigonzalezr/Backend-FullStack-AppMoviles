@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-// Ruta base para el frontend de React: /api/productos
-@RequestMapping("/api/productos")
+@RequestMapping("/api/v1/productos")
 @Validated
-// Nota: La documentación de Swagger (clases Operation, ApiResponses) se omitió para brevedad,
-// pero debería ser añadida aquí, siguiendo el estilo de tu proyecto Edutech.
 public class ProductoController {
 
-    // Se inyecta la interfaz del Servicio (ProductoService)
     @Autowired
     private ProductoService productoService;
 
-    // GET /api/productos
     @GetMapping
     public ResponseEntity<List<Producto>> findAll() {
-        // Muestra todos los productos del catálogo
         List<Producto> productos = this.productoService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(productos);
+        return ResponseEntity.ok(productos);
+    }
+    
+    @GetMapping("/activos")
+    public ResponseEntity<List<Producto>> findActivos() {
+        List<Producto> productos = this.productoService.findActivos();
+        return ResponseEntity.ok(productos);
     }
 
     // GET /api/productos/{id}
@@ -68,11 +68,23 @@ public class ProductoController {
                 .build();
     }
 
-    // --- NUEVO ENDPOINT DE NEGOCIO ---
-    // GET /api/productos/categoria/{categoria}
     @GetMapping("/categoria/{categoria}")
     public ResponseEntity<List<Producto>> findByCategoria(@PathVariable String categoria) {
         List<Producto> productos = this.productoService.findByCategoria(categoria);
-        return ResponseEntity.status(HttpStatus.OK).body(productos);
+        return ResponseEntity.ok(productos);
+    }
+    
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Producto>> buscarPorNombre(@RequestParam String nombre) {
+        List<Producto> productos = this.productoService.buscarPorNombre(nombre);
+        return ResponseEntity.ok(productos);
+    }
+    
+    @PutMapping("/{id}/stock")
+    public ResponseEntity<Producto> actualizarStock(
+            @PathVariable Long id,
+            @RequestParam Integer cantidad) {
+        Producto producto = this.productoService.actualizarStock(id, cantidad);
+        return ResponseEntity.ok(producto);
     }
 }

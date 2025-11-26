@@ -1,46 +1,90 @@
-package com.edutech.msvc.prueba.exceptions;
+package com.appmovil.msvc.logs.exceptions;
 
-import com.edutech.msvc.prueba.dtos.ErrorDTO;
+import com.appmovil.msvc.logs.dtos.ErrorDTO;
+import feign.FeignException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private ErrorDTO createErrorDTO(int status, Date date, Map<String, String> errorMap) {
-        ErrorDTO errorDTO = new ErrorDTO();
+    @ExceptionHandler(LogException.class)
+    public ResponseEntity<ErrorDTO> handleLogException(LogException ex, WebRequest request) {
+        ErrorDTO errorDTO = new ErrorDTO(
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now(),
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDTO);
+    }
 
-        errorDTO.setStatus(status);
-        errorDTO.setDate(date);
-        errorDTO.setErrors(errorMap);
-
-        return errorDTO;
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleResourceNotFoundException(
+            ResourceNotFoundException ex,
+            WebRequest request) {
+        ErrorDTO errorDTO = new ErrorDTO(
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now(),
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorDTO);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorDTO> handValidationFields(MethodArgumentNotValidException exception) {
+    public ResponseEntity<ErrorDTO> handleValidationExceptions(
+            MethodArgumentNotValidException ex,
+            WebRequest request) {
+        List<String> errors = ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(error -> {
+                    String fieldName = ((FieldError) error).getField();
+                    String errorMessage = error.getDefaultMessage();
+                    return fieldName + ": " + errorMessage;
+                })
+                .collect(Collectors.toList());
 
-        if (exception.getMessage().contains("Validation Failed")) {
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .timestamp(LocalDateTime.now())
+                .message("Error de validación")
+                .path(request.getDescription(false).replace("uri=", ""))
+                .errors(errors)
+                .build();
 
-            Map<String, String> errorMap = Collections.singletonMap("Prueba no encontrada", exception.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(this.createErrorDTO(HttpStatus.NOT_FOUND.value(), new Date(), errorMap));
-
-        }else{
-            Map<String, String > errorMap = Collections.singletonMap("Prueba existente", exception.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(this.createErrorDTO(HttpStatus.CONFLICT.value(), new Date(), errorMap));
-        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDTO);
     }
 
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<ErrorDTO> handleFeignException(FeignException ex, WebRequest request) {
+        ErrorDTO errorDTO = new ErrorDTO(
+                ex.status(),
+                LocalDateTime.now(),
+                "Error al comunicarse con el servicio externo: " + ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+        return ResponseEntity.status(ex.status()).body(errorDTO);
+    }
 
-
-
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDTO> handleGlobalException(Exception ex, WebRequest request) {
+        ErrorDTO errorDTO = new ErrorDTO(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                LocalDateTime.now(),
+                "Error interno del servidor: " + ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDTO);
+    }
 }

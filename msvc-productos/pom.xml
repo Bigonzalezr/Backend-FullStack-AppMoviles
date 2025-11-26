@@ -3,15 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.edutech</groupId>
+		<groupId>com.appmovil</groupId>
 		<artifactId>appmovil</artifactId>
 		<version>1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<groupId>com.edutech.msvc.alumnos</groupId>
+	<groupId>com.appmovil.msvc.productos</groupId>
 	<artifactId>msvc-productos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>msvc-alumnos</name>
-	<description>Demo project for Spring Boot</description>
+	<name>msvc-productos</name>
+	<description>Microservicio de Productos y Catálogo</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -86,11 +87,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version>
 				<configuration>
+					<release>${java.version}</release>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+							<version>1.18.30</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>

@@ -1,26 +1,20 @@
-package com.edutech.msvc.inscripcion.dtos;
+package com.appmovil.msvc.pagos.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ErrorDTO {
     private Integer status;
-    private Date date;
-
-    private Map<String, String> errors;
-
-
-    @Override
-    public String toString() {
-        return "{" +
-                "status=" + status +
-                ", date=" + date +
-                ", errors=" + errors +
-                '}';
-    }
+    private String mensaje;
+    private LocalDateTime timestamp;
+    private String path;
+    private Map<String, String> errores;
 }

@@ -7,10 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     List<Pedido> findByIdUsuario(Long idUsuario);
 
-    List<Pedido> findByProductoId(Long idProducto);
+    List<Pedido> findByIdUsuarioAndEstado(Long idUsuario, String estado);
+
+    List<Pedido> findByEstado(String estado);
+
+    List<Pedido> findByIdUsuarioOrderByFechaPedidoDesc(Long idUsuario);
 }

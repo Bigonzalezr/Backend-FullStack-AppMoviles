@@ -3,16 +3,17 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.edutech</groupId>
+		<groupId>com.appmovil</groupId>
 		<artifactId>appmovil</artifactId>
 		<version>1.0-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.edutech.msvc.pedido</groupId>
+	<groupId>com.appmovil.msvc.pedidos</groupId>
 	<artifactId>msvc-pedidos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>msvc-pedido</name>
-	<description>Microservicio pedido</description>
+	<name>msvc-pedidos</name>
+	<description>Microservicio de Pedidos y Gestión de Órdenes</description>
 	<url/>
 	<licenses>
 		<license/>

@@ -1,11 +1,9 @@
-package com.edutech.msvc.alumnos.dtos;
+package com.appmovil.msvc.productos.dtos;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDate;
 
 @Getter @Setter @ToString
 @NoArgsConstructor @AllArgsConstructor

@@ -1,6 +1,7 @@
 package com.appmovil.msvc.productos.exception;
 
 import com.appmovil.msvc.productos.dtos.ErrorDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -8,51 +9,56 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Collections;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private ErrorDTO createErrorDTO(int status, Date date, Map<String, String> errorMap) {
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setStatus(status);
-        errorDTO.setDate(date);
-        errorDTO.setErrors(errorMap);
-        return errorDTO;
-    }
-
-    /**
-     * Captura errores de validación (@Valid) y devuelve HTTP 400.
-     */
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorDTO> handleValidationFields(MethodArgumentNotValidException exception){
-        Map<String, String> errorMap = new HashMap<>();
-        for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
-            errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(this.createErrorDTO(HttpStatus.BAD_REQUEST.value(), new Date(), errorMap));
-    }
-
-    /**
-     * Captura ProductoException y mapea a errores de negocio.
-     */
     @ExceptionHandler(ProductoException.class)
-    public ResponseEntity<ErrorDTO> handleProductoException(ProductoException exception){
+    public ResponseEntity<ErrorDTO> handleProductoException(ProductoException ex, HttpServletRequest request) {
+        HttpStatus status = ex.getMessage().contains("no encontrado") || ex.getMessage().contains("no existe") 
+                ? HttpStatus.NOT_FOUND 
+                : HttpStatus.BAD_REQUEST;
+        
+        ErrorDTO error = ErrorDTO.builder()
+                .status(status.value())
+                .mensaje(ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .path(request.getRequestURI())
+                .build();
+        
+        return ResponseEntity.status(status).body(error);
+    }
 
-        if(exception.getMessage().contains("no encontrado") || exception.getMessage().contains("no existe")) {
-            // Producto no encontrado -> HTTP 404
-            Map<String, String> errorMap = Collections.singletonMap("Producto no encontrado", exception.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(this.createErrorDTO(HttpStatus.NOT_FOUND.value(), new Date(), errorMap));
-        } else {
-            // Otros errores de negocio (Ej: stock) -> HTTP 409 CONFLICT o 400 BAD REQUEST
-            Map<String, String> errorMap = Collections.singletonMap("Error de Producto", exception.getMessage());
-            return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(this.createErrorDTO(HttpStatus.CONFLICT.value(), new Date(), errorMap));
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorDTO> handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request) {
+        Map<String, String> errores = new HashMap<>();
+        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
+            errores.put(error.getField(), error.getDefaultMessage());
         }
+        
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .status(HttpStatus.BAD_REQUEST.value())
+                .mensaje("Error de validación")
+                .timestamp(LocalDateTime.now())
+                .path(request.getRequestURI())
+                .errores(errores)
+                .build();
+        
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDTO);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDTO> handleGenericException(Exception ex, HttpServletRequest request) {
+        ErrorDTO error = ErrorDTO.builder()
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .mensaje("Error interno del servidor: " + ex.getMessage())
+                .timestamp(LocalDateTime.now())
+                .path(request.getRequestURI())
+                .build();
+        
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 }

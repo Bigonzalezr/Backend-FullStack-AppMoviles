@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 
-@FeignClient(name = "msvc-usuarios", url = "http://localhost:8001/api/usuarios")
+@FeignClient(name = "msvc-usuarios", url = "http://localhost:8001/api/v1/usuarios")
 public interface UsuarioClientRest {
-
 
     @GetMapping("/{id}")
     Usuario findById(@PathVariable("id") Long id);

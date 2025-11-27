@@ -3,6 +3,7 @@ package com.appmovil.msvc.pedidos.controllers;
 import com.appmovil.msvc.pedidos.clients.PagoClientRest;
 import com.appmovil.msvc.pedidos.clients.ProductoClientRest;
 import com.appmovil.msvc.pedidos.clients.UsuarioClientRest;
+import com.appmovil.msvc.pedidos.config.TestSecurityConfig;
 import com.appmovil.msvc.pedidos.dtos.PedidoCreationDTO;
 import com.appmovil.msvc.pedidos.dtos.PedidoDetalleDTO;
 import com.appmovil.msvc.pedidos.model.Producto;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -40,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
+@Import(TestSecurityConfig.class)
 @DisplayName("PedidoController - Integration Tests")
 class PedidoControllerIntegrationTest {
 

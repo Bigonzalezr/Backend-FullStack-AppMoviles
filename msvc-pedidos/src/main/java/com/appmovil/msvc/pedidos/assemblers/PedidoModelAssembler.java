@@ -1,4 +1,4 @@
-package com.appmovil.msvc.pedidos.assemblers; // Paquete corregido
+package com.appmovil.msvc.pedidos.assemblers;
 
 import com.appmovil.msvc.pedidos.controller.PedidoController;
 import com.appmovil.msvc.pedidos.model.entity.Pedido;
